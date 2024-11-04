@@ -163,6 +163,7 @@ const HomeLayout = ({data, meta}: { data: Page, meta: Meta}) => {
                                     src={(data.intro_content.videoFile as Media).url || ""}
                                     mobileSrc={(data.intro_content.mobileVideoFile as Media).url || ""}
                                 />
+                                <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
                             </div> :
                             ""
                     }
