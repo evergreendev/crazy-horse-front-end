@@ -27,7 +27,13 @@ const MediaBlock = ({block}: {
         return <div className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
             {
                 <NeedsWindow>
-                    <ReactPlayer playsinline={true} playing={true} width="100%" height="100%"
+                    <ReactPlayer
+                        config={{ file: {
+                                attributes: {
+                                    controlsList: 'nodownload'
+                                }
+                            }}}
+                        playsinline={true} playing={true} width="100%" height="100%"
                                  playIcon={<Image className="size-14 xl:size-52 group-hover:opacity-100 transition-opacity opacity-70"
                                                   src={PlayButton} alt="Play"/>} controls={true}
                                  light={typeof block.thumbnail === "number" ? "" : block.thumbnail?.url || ""}
@@ -39,7 +45,11 @@ const MediaBlock = ({block}: {
     return <div className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
         {
             <NeedsWindow>
-                <ReactPlayer playsinline={true} playing={true} width="100%" height="100%"
+                <ReactPlayer   config={{ file: {
+                        attributes: {
+                            controlsList: 'nodownload'
+                        }
+                    }}} playsinline={true} playing={true} width="100%" height="100%"
                              playIcon={<Image className="size-14 xl:size-52 group-hover:opacity-100 transition-opacity opacity-70"
                                               src={PlayButton} alt="Play"/>} controls={true}
                              light={typeof block.thumbnail === "number" ? "" : block.thumbnail?.url || ""}
