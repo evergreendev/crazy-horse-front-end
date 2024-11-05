@@ -48,7 +48,7 @@ const MobileOnlyInfo = ({meta}: { meta: Meta }) => {
 
                 <address className="not-italic text-center">
                     <FontAwesomeIcon className="size-6 mr-5 mt-1" icon={faLocationDot}/>
-                    Crazy Horse Memorial<br/>
+                    Crazy Horse Memorial<sup>&reg;</sup><br/>
                     12151 Avenue of the Chiefs<br/>
                     Crazy Horse, SD 57730-8900<br/>
                     <Link className="underline" href={`/plan-your-visit#location-hours`}>more
@@ -100,7 +100,7 @@ const SideBar = ({meta}: { meta: Meta }) => {
             <div className="flex items-start text-xl mb-7">
                 <FontAwesomeIcon className="size-6 mr-5 mt-1" icon={faLocationDot}/>
                 <address className="not-italic">
-                    Crazy Horse Memorial<br/>
+                    Crazy Horse Memorial<sup>&reg;</sup><br/>
                     12151 Avenue of the Chiefs<br/>
                     Crazy Horse, SD 57730-8900<br/>
                     <Link className="underline" href={`/plan-your-visit#location-hours`}>more
