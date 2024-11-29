@@ -15,7 +15,7 @@ import {
     faYoutubeSquare
 } from "@awesome.me/kit-2a2dc088e2/icons/classic/brands";
 import {getCurrentSchedule, getHoursFromSchedule} from "@/app/utilities/hours";
-import {Media, Page} from "@/app/types/payloadTypes";
+import {Media, Modal, Page} from "@/app/types/payloadTypes";
 import Video from "@/app/components/Video";
 import {Meta} from "@/app/types/types";
 import Footer from "@/app/components/Footer";
@@ -25,6 +25,7 @@ import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
 import Announcement from "@/app/components/Announcement";
 import {open_sans, pt_serif} from "@/app/fonts";
+import ModalComponent from "@/app/components/Modal";
 
 const MobileOnlyInfo = ({meta}: { meta: Meta }) => {
     const currentSchedule = getCurrentSchedule(meta.hours)
@@ -127,9 +128,13 @@ const SideBar = ({meta}: { meta: Meta }) => {
     </div>
 }
 
-const HomeLayout = ({data, meta}: { data: Page, meta: Meta}) => {
+const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}) => {
     return (
         <main className={`${open_sans.variable} ${pt_serif.variable} flex min-h-screen flex-col justify-between`}>
+            {
+                modal ?
+                    <ModalComponent modal={modal} /> : ""
+            }
                 <Announcement data={meta.banner}/>
             <div className="flex flex-wrap xl:flex-nowrap w-full mb-4 max-w-top ml-auto mt-4 pl-0 xl:pl-7">
                 <SideBar meta={meta}/>

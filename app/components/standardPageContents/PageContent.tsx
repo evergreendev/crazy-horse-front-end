@@ -2,20 +2,25 @@ import BreadCrumbs from "@/app/components/BreadCrumbs";
 import JumpMenu from "@/app/components/JumpMenu";
 import React from "react";
 import TopBar from "@/app/components/TopBar";
-import {Media, Page} from "@/app/types/payloadTypes";
+import {Media, Modal, Page} from "@/app/types/payloadTypes";
 import Footer from "@/app/components/Footer";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import ImageSlider from "@/app/components/ImageSlider";
 import Announcement from "@/app/components/Announcement";
 import {cookies} from "next/headers";
 import PasswordForm from "@/app/components/PasswordForm/PasswordForm";
+import ModalComponent from "@/app/components/Modal";
 
-const PageContent = async ({data, meta}: { data: Page, meta: any }) => {
+const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?: Modal }) => {
     const cookieStore = await cookies();
     const savedPagePassword = cookieStore.get(data.slug+"password");
     const showPasswordForm = data.passwordProtect && savedPagePassword?.value !== data.password
 
     return <main className="flex min-h-screen flex-col items-center w-full">
+        {
+            modal ?
+                <ModalComponent modal={modal} /> : ""
+        }
         <Announcement data={meta.banner}/>
         <div className="p-2 xl:px-24 xl:py-7 flex flex-col items-center w-full">
             <TopBar siteOption={meta.siteOptions} nav={meta.nav}/>
