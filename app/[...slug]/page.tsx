@@ -79,7 +79,7 @@ export default async function Page({params, searchParams}: { params: { slug: str
             if (typeof x === "number") {
                 return x === data.id
             } else {
-                return x.slug === data.slug
+                return x?.slug === data?.slug
             }
         });
     });
