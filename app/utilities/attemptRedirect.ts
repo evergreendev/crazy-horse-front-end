@@ -1,4 +1,4 @@
-import {notFound, redirect} from "next/navigation";
+import {redirect} from "next/navigation";
 import qs from "qs";
 
 async function getRedirect(query: any){
@@ -39,8 +39,6 @@ async function attemptRedirect(slug:string[]){
             redirect(to.url);
         }
     }
-
-    notFound();
 }
 
 export default attemptRedirect;

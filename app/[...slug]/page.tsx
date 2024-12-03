@@ -5,6 +5,7 @@ import PageClient from "@/app/components/standardPageContents/page.client";
 import getMeta from "@/app/data/getMeta";
 import attemptRedirect from "@/app/utilities/attemptRedirect";
 import {Modal} from "@/app/types/payloadTypes";
+import {notFound} from "next/navigation";
 
 async function getData(query: any, tag: string) {
     const stringifiedQuery = qs.stringify(
@@ -76,15 +77,20 @@ export default async function Page({params, searchParams}: { params: { slug: str
         }
 
         return modal.pages?.find(x => {
+            if (!data?.slug){
+                return false;
+            }
             if (typeof x === "number") {
                 return x === data.id
             } else {
-                return x?.slug === data?.slug
+                return x.slug === data.slug
             }
         });
     });
 
-    if(!data) await attemptRedirect(params.slug);
+    await attemptRedirect(params.slug);
+
+    if (!data) notFound();
 
     if (secret === process.env.NEXT_PUBLIC_DRAFT_SECRET){
         return (
