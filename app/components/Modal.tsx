@@ -31,7 +31,7 @@ const ModalComponent = ({modal}: { modal: Modal }) => {
 
     return <div>
         <div
-            className="bg-white z-50 fixed top-1/2 lg:top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-screen-md">
+            className="bg-white z-50 fixed inset-4 overflow-x-auto sm:top-1/2 lg:top-1/3 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-screen-md">
             <div className="bg-[#0079bf] text-white p-8">
                 <div className="flex flex-wrap justify-around">
                     {
@@ -66,7 +66,7 @@ const ModalComponent = ({modal}: { modal: Modal }) => {
                 }
             </div>
         </div>
-        <button className="absolute right-4 top-4 z-50 bg-white bg-opacity-50 flex items-center justify-center p-4" onClick={() => setIsOpen(false)}>
+        <button className="fixed right-4 top-4 z-50 bg-white bg-opacity-50 flex items-center justify-center p-4" onClick={() => setIsOpen(false)}>
             <FontAwesomeIcon className="size-5" icon={faXmark}/>
         </button>
         <div onClick={() => setIsOpen(false)} className="inset-0 bg-black bg-opacity-50 z-40 fixed"/>
