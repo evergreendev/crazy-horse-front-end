@@ -44,7 +44,7 @@ async function getModals() {
 }
 
 export default async function Page({params, searchParams}: { params: { slug: string[] }, searchParams?:{draft?:string; secret?:string} }) {
-    const slug = params.slug;
+    const slug = (await params).slug;
     const secret = searchParams?.secret;
     const res = await getData({
         slug: {

@@ -31,7 +31,7 @@ const ModalComponent = ({modal}: { modal: Modal }) => {
 
     return <div>
         <div
-            className="bg-white z-50 fixed inset-4 overflow-x-auto sm:top-1/2 lg:top-1/3 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-screen-md">
+            className="bg-white z-50 fixed overflow-x-auto top-4 left-0 sm:top-1/2 lg:top-1/3 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 w-full max-w-screen-md">
             <div className="bg-[#0079bf] text-white p-8">
                 <div className="flex flex-wrap justify-around">
                     {
