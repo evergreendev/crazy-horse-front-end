@@ -88,7 +88,7 @@ export default async function Page({params, searchParams}: { params: { slug: str
         });
     });
 
-    await attemptRedirect(params.slug);
+    if (!data) await attemptRedirect(params.slug);
 
     if (!data) notFound();
 
