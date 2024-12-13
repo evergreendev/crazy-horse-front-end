@@ -50,7 +50,12 @@ const MediaBlock = ({block}: {
     return <div className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
         {
             <NeedsWindow>
-                <ReactPlayer   config={{ file: {
+                <ReactPlayer
+                    onStart={() => {
+                        console.log("video play")
+                        sendGAEvent('event', 'video_play', { value: (block.media as Media)?.url })
+                    }}
+                    config={{ file: {
                         attributes: {
                             controlsList: 'nodownload'
                         }
