@@ -29,9 +29,9 @@ const MediaBlock = ({block}: {
             {
                 <NeedsWindow>
                     <ReactPlayer
-                        onPlay={() => {
+                        onStart={() => {
                             console.log("video play")
-                            sendGAEvent('video_play', { value: block.url })
+                            sendGAEvent('event', 'video_play', { value: block.url })
                         }}
                         config={{ file: {
                                 attributes: {
