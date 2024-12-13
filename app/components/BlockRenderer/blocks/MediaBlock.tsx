@@ -4,6 +4,7 @@ import Image from "next/image";
 import ReactPlayer from "react-player";
 import PlayButton from "@/public/play-button.svg"
 import NeedsWindow from "@/app/components/NeedsWindow";
+import {sendGAEvent} from "@next/third-parties/google";
 
 const MediaBlock = ({block}: {
     block: {
@@ -28,6 +29,9 @@ const MediaBlock = ({block}: {
             {
                 <NeedsWindow>
                     <ReactPlayer
+                        onPlay={() => {
+                            sendGAEvent('event', 'video_play', { value: block.url })
+                        }}
                         config={{ file: {
                                 attributes: {
                                     controlsList: 'nodownload'
