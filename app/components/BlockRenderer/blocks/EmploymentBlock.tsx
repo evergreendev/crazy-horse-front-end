@@ -119,10 +119,10 @@ const EmploymentBlock = ({block}: {
                                width={position.featuredImage.width || 0} height={position.featuredImage.height || 0}/>
                     </div> : ""
                 }
-                <div className="w-8/12 grow flex flex-col min-h-24">
+                <div className="w-8/12 grow flex flex-col min-h-24 ">
                     <h3 className="text-xl font-bold">{position.title}</h3>
                     {position.description ? <p className="text-slate-600">{position.description}</p> : ""}
-                    <div className="ml-auto mt-auto">
+                    <div className="ml-auto mt-4">
                         {
                             !position.linksToOnlineEmploymentForm
                             && <Button isExternal={true} config={buttonConfig.secondary} text="View Job Description" href={(position.PDF as Media).url||""}/>
