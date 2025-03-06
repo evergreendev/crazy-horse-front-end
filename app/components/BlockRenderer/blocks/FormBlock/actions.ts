@@ -109,6 +109,7 @@ export async function submitPayloadForm(prevState: {
 
     } catch (err: any) {
         console.warn(err)
+        console.log("CH FORM ERROR");
         const nodeError: NodeJS.ErrnoException = err
         return {
             message: false,
