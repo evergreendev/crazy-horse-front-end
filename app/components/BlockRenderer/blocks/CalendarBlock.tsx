@@ -193,7 +193,7 @@ export const CalendarBlock = ({block}: { block: any }) => {
 
     useEffect(() => {
 
-        const dayOffset = firstDayOfWeek(currDateObj);
+        const dayOffset = firstDayOfWeek(currDateObj) || 7;
 
 
         const updatedDateElements = [];
@@ -227,7 +227,7 @@ export const CalendarBlock = ({block}: { block: any }) => {
 
         const lastDayOfMonth = lastDayOfWeek(new Date(currYear, currMonth, getDaysInMonth(currMonth, currYear)));
 
-
+        let lastDay = 0;
         for (let i = 0; i < 6 - lastDayOfMonth; i++) {
             updatedDateElements.push(
                 <CalendarButton
@@ -236,6 +236,19 @@ export const CalendarBlock = ({block}: { block: any }) => {
                     isCurrentMonth={false} date={i + 1} currMonth={currMonth + 1} currYear={currYear}
                     items={calendarItems}/>
             )
+            lastDay = i + 1;
+        }
+
+        while (updatedDateElements.length < 42){
+            const date = lastDay + 1;
+            updatedDateElements.push(
+                <CalendarButton
+                    onClick={() => handleDateClick((date), currMonth + 1, currYear)}
+                    isSelected={false}
+                    isCurrentMonth={false} date={date} currMonth={currMonth + 1} currYear={currYear}
+                    items={calendarItems}/>
+            )
+            lastDay++;
         }
 
         setDateElements(updatedDateElements);
