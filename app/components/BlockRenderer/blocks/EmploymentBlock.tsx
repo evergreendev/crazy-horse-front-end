@@ -124,7 +124,7 @@ const EmploymentBlock = ({block}: {
                     {position.description ? <p className="text-slate-600">{position.description}</p> : ""}
                     <div className="ml-auto mt-4">
                         {
-                            !position.linksToOnlineEmploymentForm
+                            position.PDF
                             && <Button isExternal={true} config={buttonConfig.secondary} text="View Job Description" href={(position.PDF as Media).url||""}/>
                         }
                         <Button config={buttonConfig.tertiary} icon={faChevronCircleRight} text="Click Here to Apply" href={"/about/employment/employment-application"}/>
