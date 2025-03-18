@@ -17,6 +17,7 @@ async function getData(query: any, tag: string) {
     const stringifiedQuery = qs.stringify(
         {
             where: query,
+            sort: "order",
         },
         {
             addQueryPrefix: true
