@@ -92,6 +92,20 @@ export async function submitPayloadForm(prevState: {
         })
         const data = await res.json();
 
+        if (data?.errors)   {
+            console.log("CH FORM ERROR");
+            return {
+                message: false,
+                error: {
+                    message: "Something went wrong when submitting the form. Please try again later.",
+                    fieldName: "all"
+                },
+                fields: prevState.fields,
+                form: prevState.form,
+            }
+        }
+
+
 /*        await axios.post(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
             _payload: JSON.stringify({
                 associatedFormSubmission: data.doc.id
