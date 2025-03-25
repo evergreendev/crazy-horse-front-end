@@ -16,7 +16,7 @@
     "@payloadcms/live-preview-react": "^0.2.0",
     "axios": "^1.7.7",
     "font-awesome": "^4.7.0",
-    "next": "14.2.5",
+    "next": "14.2.15",
     "photoswipe": "^5.4.4",
     "qs": "^6.13.0",
     "react": "^18",
