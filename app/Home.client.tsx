@@ -175,7 +175,7 @@ export const HomeClient: React.FC<{
                     <div
                         className="w-full bg-pale-1 xl:bg-transparent p-4 xl:p-0 flex flex-col mx-auto max-w-screen-lg xl:mt-6 text-center">
                         <div className="flex xl:justify-center xl:mx-auto">
-                            <h2 className="font-ptserif text-2xl text-left xl:text-4xl font-bold border-b-brand-yellow border-b-4">{data.intro_content?.header}</h2>
+                            <h1 className="font-ptserif text-2xl text-left xl:text-4xl font-bold border-b-brand-yellow border-b-4">{data.intro_content?.header}</h1>
                         </div>
                         <p className="font-ptserif text-xl text-left xl:text-center xl:text-3xl font-normal max-w-full">
                             {data.intro_content?.content}
