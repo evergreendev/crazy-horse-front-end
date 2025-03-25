@@ -22,6 +22,7 @@ import AdmissionBlock from "@/app/components/BlockRenderer/blocks/AdmissionBlock
 import CollectionList from "@/app/components/BlockRenderer/blocks/CollectionList";
 import WebcamBlock from "@/app/components/BlockRenderer/blocks/WebcamBlock";
 import IFrameBlock from "@/app/components/BlockRenderer/blocks/IFrameBlock";
+import BookNowButton from "@/app/components/BlockRenderer/blocks/BookNowButton";
 
 const BlockRenderer = forwardRef(function BlockRenderer({blocks, tabIndex}: {
     blocks: any,
@@ -82,6 +83,8 @@ const BlockRenderer = forwardRef(function BlockRenderer({blocks, tabIndex}: {
                     return <CollectionList block={block} key={block.id}/>
                 case "WebcamBlock":
                     return <WebcamBlock key={block.id}/>
+                case "BookNowButton":
+                    return <BookNowButton key={block.id}/>
                 case "IFrame":
                     return <IFrameBlock block={block} key={block.id}/>
                 default:
