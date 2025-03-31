@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {open_sans, pt_serif} from "@/app/fonts";
 import "@/app/globals.css";
 import Script from "next/script";
-import {GoogleAnalytics} from '@next/third-parties/google'
+import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 
 async function getMeta() {
     const res = await fetch(
@@ -46,6 +46,7 @@ export default async function RootLayout({
         <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
         <body className={`${open_sans.variable} ${pt_serif.variable}`}>{children}</body>
         <GoogleAnalytics gaId="G-YDSBS7V3D3"/>
+        <GoogleTagManager gtmId="GTM-58SJF86R"/>
         </html>
     );
 }
