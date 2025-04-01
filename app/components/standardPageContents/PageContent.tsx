@@ -10,6 +10,7 @@ import Announcement from "@/app/components/Announcement";
 import {cookies} from "next/headers";
 import PasswordForm from "@/app/components/PasswordForm/PasswordForm";
 import ModalComponent from "@/app/components/Modal";
+import Video from "@/app/components/Video";
 
 const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?: Modal }) => {
     const cookieStore = await cookies();
@@ -25,6 +26,30 @@ const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?:
         <div className="p-2 xl:px-24 xl:py-7 flex flex-col items-center w-full">
             <TopBar siteOption={meta.siteOptions} nav={meta.nav}/>
         </div>
+        {
+            data.intro_content?.videoFile ?
+                <div className="w-full">
+                    <Video
+                        thumbnail={typeof data.intro_content.thumbnail === "number" ? undefined : data.intro_content.thumbnail}
+                        src={(data.intro_content.videoFile as Media).url || ""}
+                        mobileSrc={(data.intro_content.mobileVideoFile as Media).url || ""}
+                    />
+                    <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
+                </div> :
+                ""
+        }
+        {
+            data.intro_content?.video ?
+                <div className="w-full">
+                    <Video
+                        thumbnail={typeof data.intro_content.thumbnail === "number" ? undefined : data.intro_content.thumbnail}
+                        src={data.intro_content?.video || ""}
+                        mobileSrc={data.intro_content?.video || ""}
+                    />
+                    <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
+                </div> :
+                ""
+        }
         <ImageSlider headerText={data.intro_content?.header || data.title} bodyText={data.intro_content?.content || ""}
                      images={data.intro_content?.images?.filter((image): image is { media: Media, id: string } => {
                          return !!image.media && typeof image.media !== "number"
