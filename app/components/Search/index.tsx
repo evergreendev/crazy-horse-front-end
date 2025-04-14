@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@awesome.me/kit-2a2dc088e2/icons/classic/regular";
 import React, {useEffect, useRef} from "react";
 import qs from "qs";
-import {notFound} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {useDebounce} from "use-debounce";
 import {Search} from "@/app/types/payloadTypes";
 import Link from "next/link";
@@ -27,8 +27,6 @@ async function getData(query: any, tag: string, page?: string) {
         }
     );
 
-    if (res.status !== 200) notFound();
-
     return res.json();
 }
 
@@ -42,6 +40,7 @@ const SearchBar = () => {
     const [totalResults, setTotalResults] = React.useState(0);
     const [hasMoreResults, setHasMoreResults] = React.useState(false);
     const [displayResults, setDisplayResults] = React.useState<boolean>(false);
+    const router = useRouter();
 
     useEffect(() => {
         setSearchQuery({
@@ -52,6 +51,11 @@ const SearchBar = () => {
                         like: debouncedValue,
                     },
                 },
+                {
+                    searchKeywords: {
+                        like: debouncedValue,
+                    }
+                }
             ]
         })
 
@@ -97,7 +101,12 @@ const SearchBar = () => {
         };
     }, [resultRef]);
 
-    return <div className="z-30 flex text-gray-500 items-center text-xl mt-auto ml-2.5 relative">
+    return <form onSubmit={(e) => {
+        e.preventDefault();
+        if (value) {
+            router.push(`/search?search=${value}`);
+        }
+    }} className="z-30 flex text-gray-500 items-center text-xl mt-auto ml-2.5 relative">
         <FontAwesomeIcon className="size-5 mr-2" icon={faMagnifyingGlass} size="sm"/>
         <input ref={inputRef} value={value} onChange={(e) => setValue(e.target.value)} placeholder="Search"/>
         {
@@ -120,7 +129,7 @@ const SearchBar = () => {
                 }
             </div>
         }
-    </div>
+    </form>
 }
 
 export default SearchBar;

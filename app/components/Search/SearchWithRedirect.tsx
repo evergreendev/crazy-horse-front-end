@@ -1,7 +1,9 @@
 "use client"
 
 import {useRouter} from "next/navigation";
-import {useRef} from "react";
+import React, {useRef} from "react";
+import {faMagnifyingGlass} from "@awesome.me/kit-2a2dc088e2/icons/classic/regular";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 
@@ -9,23 +11,26 @@ const SearchWithRedirect = ({}) => {
     const router = useRouter();
     const searchRef = useRef<HTMLInputElement>(null);
 
-    return <form className="mb-6" onSubmit={(e) => {
+    return <form className="mb-6 flex items-center" onSubmit={(e) => {
         e.preventDefault();
         if (searchRef.current) {
             router.push(`/search?search=${searchRef.current.value}`);
         }
-    }}>
+    }}><FontAwesomeIcon className="size-5 mr-2" icon={faMagnifyingGlass} size="sm"/>
         <div
-            className={`p-4 flex flex-col flex-wrap`}
-            style={{width: `100%`}}>
-            <label className="mr-2 font-opensans font-normal text-sm"
+            className="flex flex-col flex-wrap w-full">
+            <label className="font-opensans font-normal text-sm hidden"
                    htmlFor="search">Search</label>
+
             <div className="max-w-full mt-auto">
-                <input ref={searchRef} className="border border-stone-300 p-1.5 bg-white rounded w-full" type="text" name="search"
+                <input ref={searchRef} type="text"
+                       className="p-2 bg-white w-full"
+                       name="search"
+                       placeholder="Search"
                        id="search"/>
             </div>
         </div>
-        <input className="bg-blue-900 p-8 py-2 text-white ml-auto flex" type="submit" value="Submit"/>
+        <input className="bg-blue-900 p-8 py-2 text-white" type="submit" value="Submit"/>
     </form>
 }
 

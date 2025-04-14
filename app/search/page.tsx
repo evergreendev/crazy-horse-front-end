@@ -1,9 +1,8 @@
 import qs from "qs";
 import React from "react";
-import {notFound} from "next/navigation";
 import getMeta from "@/app/data/getMeta";
 import TopBar from "@/app/components/TopBar";
-import {Page} from "@/app/types/payloadTypes";
+import {Search} from "@/app/types/payloadTypes";
 import BreadCrumbs from "@/app/components/BreadCrumbs";
 import Footer from "@/app/components/Footer";
 import Pagination from "@/app/components/Pagination";
@@ -23,7 +22,7 @@ async function getData(query: any, tag: string, page?: string) {
     );
 
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/${stringifiedQuery}&depth=2&page=${page}`,
+        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/search/${stringifiedQuery}&depth=1&page=${page}`,
         {
             next: {
                 tags: [tag]
@@ -31,7 +30,7 @@ async function getData(query: any, tag: string, page?: string) {
         }
     );
 
-    if (res.status !== 200) notFound();
+    //if (res.status !== 200) notFound();
 
     return res.json();
 }
@@ -74,9 +73,13 @@ export default async function SearchPage({searchParams}: {
                     like: search,
                 },
             },
+            {
+                searchKeywords: {
+                    like: search,
+                }
+            }
         ]
     }, "search_", page);
-
 
     return <main className="flex min-h-screen flex-col items-center w-full">
         <div className="px-24 py-7 flex flex-col items-center w-full">
@@ -92,9 +95,9 @@ export default async function SearchPage({searchParams}: {
         <div className="w-full pt-16 bg-slate-50">
             <h1 className="max-w-screen-md mb-6 mx-auto text-4xl font-ptserif underline underline-offset-8 decoration-brand-yellow decoration-4">Results</h1>
             <div className="max-w-screen-sm mx-auto flex-col">
-                {data.docs.map((doc: Page) => {
+                {data.docs && data.docs.map((doc: Search) => {
                     return <Link className="w-full text-xl bg-slate-100 hover:bg-slate-200 p-2 my-2 flex flex-wrap"
-                                 key={doc.id} href={`/${doc.full_path}`}>
+                                 key={doc.id} href={`/id-redirect-to-slug/${doc.doc.relationTo}/${doc.doc.value}`}>
                         <FontAwesomeIcon className="text-slate-900 mr-2" size="lg" icon={faFile}/>
                         <p>{doc.title}</p>
                     </Link>
