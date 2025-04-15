@@ -75,11 +75,6 @@ export async function submitPayloadForm(prevState: {
 
     try {
 
-        for (const file of filesToUpload) {
-        await axios.postForm(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
-            file: file.formData[1],
-        }, {headers: {"Content-Type": "multipart/form-data"}});
-    }
         const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/form-submissions`, {
             method: 'POST',
             headers: {
@@ -104,7 +99,14 @@ export async function submitPayloadForm(prevState: {
                 form: prevState.form,
             }
         }
-
+        for (const file of filesToUpload) {
+            await axios.postForm(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
+                file: file.formData[1],
+                _payload: JSON.stringify({
+                    associatedFormSubmission: data.doc.id
+                }),
+            }, {headers: {"Content-Type": "multipart/form-data"}});
+        }
 
 /*        await axios.post(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
             _payload: JSON.stringify({
