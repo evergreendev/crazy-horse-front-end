@@ -36,10 +36,25 @@ export default async function RootLayout({
     return (
         <html lang="en">
         <Script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="text/javascript"/>
+{/*        <Script strategy="lazyOnload" id="ttduniveralPixelAPI" type="text/javascript">
+            {
+                `                ttd_dom_ready( function () {if (typeof TTDUniversalPixelApi === 'function') {var universalPixelApi = new TTDUniversalPixelApi(); universalPixelApi.init("yh6tlla", ["7un71c4"], "https://insight.adsrvr.org/track/up");}})
+`}
+        </Script>*/}
         <Script strategy="lazyOnload" id="ttduniveralPixelAPI" type="text/javascript">
             {
-`                ttd_dom_ready( function () {if (typeof TTDUniversalPixelApi === 'function') {var universalPixelApi = new TTDUniversalPixelApi(); universalPixelApi.init("yh6tlla", ["7un71c4"], "https://insight.adsrvr.org/track/up");}})
-`            }
+                `           ttd_dom_ready( function() {
+
+if (typeof TTDUniversalPixelApi === 'function') {
+
+var universalPixelApi = new TTDUniversalPixelApi();
+
+universalPixelApi.init("j59v8fs", ["3ywytgo"], "https://insight.adsrvr.org/track/up");
+
+}
+
+});
+`}
         </Script>
         <Script
             src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
