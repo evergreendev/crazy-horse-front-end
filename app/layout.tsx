@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import Script from "next/script";
 import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 import GoogleAnalyticsPageView from "@/app/components/GoogleAnalyticsPageView";
+import {Suspense} from "react";
 
 async function getMeta() {
     const res = await fetch(
@@ -63,9 +64,11 @@ universalPixelApi.init("j59v8fs", ["3ywytgo"], "https://insight.adsrvr.org/track
         <body className={`${open_sans.variable} ${pt_serif.variable}`}>
             {children}
             {/* GoogleAnalyticsPageView component for tracking page views on route changes */}
-            <div id="analytics-wrapper">
-                <GoogleAnalyticsPageView />
-            </div>
+            <Suspense>
+                <div id="analytics-wrapper">
+                    <GoogleAnalyticsPageView />
+                </div>
+            </Suspense>
         </body>
         <GoogleAnalytics gaId="G-YDSBS7V3D3"/>
         <GoogleTagManager gtmId="GTM-58SJF86R"/>
