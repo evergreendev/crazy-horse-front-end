@@ -307,15 +307,22 @@ export const CalendarBlock = ({block}: { block: any }) => {
                                 item?.times?.map(time => {
                                     if (!time.hour_start) return;
 
-                                    // Backend now provides hour_start and hour_end as formatted strings
+                                    const startTime = new Date(time.hour_start);
+                                    const startAmPm = startTime.getHours() <= 11 ? "AM" : "PM";
+                                    const startHour = (startAmPm === "AM" ? startTime.getHours() : startTime.getHours() - 12) || 12;
+
+
                                     if (!time.hour_end) {
                                         return <div key={time.id}>
-                                            {time.hour_start}
+                                            {startHour}:{startTime.getMinutes().toString().padStart(2, "0")} {startAmPm}
                                         </div>
                                     }
+                                    const endTime = new Date(time.hour_end);
+                                    const endAmPm = endTime.getHours() <= 11 ? "AM" : "PM";
+                                    const endHour = (endAmPm === "AM" ? endTime.getHours() : endTime.getHours() - 12) || 12;
 
                                     return <div key={time.id}>
-                                        {time.hour_start} - {time.hour_end}
+                                        {startHour}:{startTime.getMinutes().toString().padStart(2, "0")}{startAmPm === endAmPm ? "" : startAmPm} - {endHour}:{endTime.getMinutes().toString().padStart(2, "0")}{endAmPm}
                                     </div>
 
 
