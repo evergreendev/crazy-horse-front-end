@@ -49,18 +49,8 @@ export const getCurrentSchedule = (hour: Hour) => {
     })
 }
 
-const getHourText = (hour: number, minutes: string) => {
-    const a = hour > 12 ? "pm" : "am";
-    const hourText = a === "am" ? hour||12 : (hour - 12)||12;
-
-    return hourText + ":" + minutes + a;
-}
-
 export const getHoursFromSchedule = (hours: Hours) => {
     if (!hours.hour_start || !hours.hour_end) return null;
-    const start = new Date(hours.hour_start);
-
-    const end = new Date(hours.hour_end);
-
-    return getHourText(start.getHours(), (start.getMinutes() < 10 ? '0' : '') + start.getMinutes()) + " - " + getHourText(end.getHours(), (end.getMinutes() < 10 ? '0' : '') + end.getMinutes());
+    // Backend now provides hour_start and hour_end as formatted strings
+    return hours.hour_start + " - " + hours.hour_end;
 }
