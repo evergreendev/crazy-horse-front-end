@@ -74,6 +74,31 @@ export async function submitPayloadForm(prevState: {
     });
 
     try {
+        const uploadedFileNames: string[] = [];
+        for (const file of filesToUpload) {
+            const fileRes = await axios.postForm(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
+                file: file.formData[1],
+                _payload: JSON.stringify({
+                }),
+            }, {headers: {"Content-Type": "multipart/form-data"}});
+            const fileData = await fileRes.data;
+            uploadedFileNames.push(fileData.doc.filename);
+        }
+
+        //We need to rename the files to the correct name. (in case it was renamed by payload)
+        if (uploadedFileNames.length > 0) {
+            let fieldIndex = 0;
+            for(let i = 0; i < uploadedFileNames.length; i++) {
+                while (fieldIndex < dataToSend.length){
+                    if (dataToSend[fieldIndex].value.includes("upload:-")) {
+                        dataToSend[fieldIndex].value = "upload:-"+uploadedFileNames[i];
+                        fieldIndex++;
+                        break;
+                    }
+                    fieldIndex++;
+                }
+            }
+        }
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/form-submissions`, {
             method: 'POST',
@@ -99,20 +124,6 @@ export async function submitPayloadForm(prevState: {
                 form: prevState.form,
             }
         }
-        for (const file of filesToUpload) {
-            await axios.postForm(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
-                file: file.formData[1],
-                _payload: JSON.stringify({
-                    associatedFormSubmission: data.doc.id
-                }),
-            }, {headers: {"Content-Type": "multipart/form-data"}});
-        }
-
-/*        await axios.post(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
-            _payload: JSON.stringify({
-                associatedFormSubmission: data.doc.id
-            }),
-        })*/
 
 
 
