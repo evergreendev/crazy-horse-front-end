@@ -40,9 +40,9 @@ export default async function RootLayout({
         <Script id={"fundRaiseUp"}>
             {
                 `<!-- Fundraise Up: the new standard for online giving -->
-<script>(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'.split(','),i=0;o=function(n){return function(){return i?o.l.push([n,arguments]):o._.push([n,arguments])}},i=0;o._=[];for(;i<l.length;i++)o[l[i]]=o(l[i]);w[n]=o;
+(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'.split(','),i=0;o=function(n){return function(){return i?o.l.push([n,arguments]):o._.push([n,arguments])}},i=0;o._=[];for(;i<l.length;i++)o[l[i]]=o(l[i]);w[n]=o;
 t=d.getElementsByTagName(s)[0];j=d.createElement(s);j.async=1;j.src='https://cdn.fundraiseup.com/widget/'+a+'.js';
-t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];for(i=0;i<8;i++)o.t[i]=0;l[1]=o;l[2]=[]}})(window,document,'script','FundraiseUp','AMHYAEEN');</script>
+t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];for(i=0;i<8;i++)o.t[i]=0;l[1]=o;l[2]=[]}})(window,document,'script','FundraiseUp','AMHYAEEN');
 <!-- End Fundraise Up -->`
             }
         </Script>
