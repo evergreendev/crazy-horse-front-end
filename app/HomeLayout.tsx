@@ -23,6 +23,7 @@ import MegaMenu from "@/app/components/MegaMenu";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
+import Announcement from "@/app/components/Announcement";
 import {open_sans, pt_serif} from "@/app/fonts";
 import ModalComponent from "@/app/components/Modal";
 
@@ -130,10 +131,11 @@ const SideBar = ({meta}: { meta: Meta }) => {
 const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}) => {
     return (
         <main className={`${open_sans.variable} ${pt_serif.variable} flex min-h-screen flex-col justify-between`}>
-            {
+{/*            {
                 modal ?
                     <ModalComponent modal={modal} /> : ""
             }
+                <Announcement data={meta.banner}/>*/}
             <div className="flex flex-wrap xl:flex-nowrap w-full mb-4 max-w-top ml-auto mt-4 pl-0 xl:pl-7">
                 <SideBar meta={meta}/>
                 <div className="font-ptserif mx-auto grow pl-0 xl:pl-10">
