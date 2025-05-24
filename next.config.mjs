@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    compiler: {
+        removeConsole: false,
+    },
     images: process.env.NODE_ENV === "production" ? {
-        compiler: {
-            removeConsole: false,
-        },
         remotePatterns: [
             {
                 hostname: process.env.NEXT_PUBLIC_REMOTE_IMAGE_URL
