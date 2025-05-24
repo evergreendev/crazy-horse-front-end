@@ -23,7 +23,9 @@ import MegaMenu from "@/app/components/MegaMenu";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
+import Announcement from "@/app/components/Announcement";
 import {open_sans, pt_serif} from "@/app/fonts";
+import ModalComponent from "@/app/components/Modal";
 
 const MobileOnlyInfo = ({meta}: { meta: Meta }) => {
     const currentSchedule = getCurrentSchedule(meta.hours)
@@ -128,76 +130,7 @@ const SideBar = ({meta}: { meta: Meta }) => {
 
 const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}) => {
     return (
-        <main className={`${open_sans.variable} ${pt_serif.variable} flex min-h-screen flex-col justify-between`}>
-{/*            {
-                modal ?
-                    <ModalComponent modal={modal} /> : ""
-            }
-                <Announcement data={meta.banner}/>*/}
-            <div className="flex flex-wrap xl:flex-nowrap w-full mb-4 max-w-top ml-auto mt-4 pl-0 xl:pl-7">
-                <SideBar meta={meta}/>
-                <div className="font-ptserif mx-auto grow pl-0 xl:pl-10">
-                    <div
-                        className="flex justify-between items-start max-w-screen-xl p-2 pl-0 gap-x-4 xl:gap-x-0 xl:p-0">
-                        <div className="flex flex-col justify-start gap-2">
-                            <Link href="/" className="xl:hidden">
-                                <Image className="w-52 ml-2" src={(meta.siteOptions.siteLogoSmall as Media).url || ""}
-                                       alt={(meta.siteOptions.siteLogoSmall as Media).alt || ""}
-                                       width={(meta.siteOptions.siteLogoSmall as Media).width || 0}
-                                       height={(meta.siteOptions.siteLogoSmall as Media).height || 0}
-                                />
-                            </Link>
-                            <MegaMenu nav={meta.nav}/>
-                            <div className="my-8 hidden xl:block">
-                                <SearchBar/>
-                            </div>
-
-                        </div>
-                        <div>
-                            <Button isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
-                                    config={buttonConfig.highlight + " text-center justify-around"}/>
-                        </div>
-                    </div>
-                    {
-                        data.intro_content?.videoFile ?
-                            <div className="w-full">
-                                <Video
-                                    thumbnail={typeof data.intro_content.thumbnail === "number" ? undefined : data.intro_content.thumbnail}
-                                    src={(data.intro_content.videoFile as Media).url || ""}
-                                    mobileSrc={(data.intro_content.mobileVideoFile as Media).url || ""}
-                                />
-                                <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
-                            </div> :
-                            ""
-                    }
-                    <div
-                        className="w-full bg-pale-1 xl:bg-transparent p-4 xl:p-0 flex flex-col mx-auto max-w-screen-lg xl:mt-6 text-center">
-                        <div className="flex xl:justify-center xl:mx-auto">
-                            <h1 className="font-ptserif text-2xl text-left xl:text-4xl font-bold border-b-brand-yellow border-b-4">{data.intro_content?.header}</h1>
-                        </div>
-                        <p className="font-ptserif text-xl text-left xl:text-center xl:text-3xl font-normal max-w-full">
-                            {data.intro_content?.content}
-                        </p>
-                    </div>
-
-                </div>
-            </div>
-            <div className="w-full mt-6 max-w-top ml-auto pl-7 hidden xl:flex">
-                <div className="max-w-md w-full flex items-center mr-14">
-                    <BreadCrumbs fullPath={data?.full_path || ""}/>
-                </div>
-
-                {
-                    data?.jump_menu && <JumpMenu items={data.jump_menu}/>
-                }
-            </div>
-            <MobileOnlyInfo meta={meta}/>
-            <div className="w-full xl:pt-16">
-                <BlockRenderer blocks={data.layout}/>
-            </div>
-
-            <Footer footer={meta.footer}/>
-        </main>
+        <div></div>
     );
 }
 
