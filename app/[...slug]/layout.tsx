@@ -71,8 +71,8 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <body className={`font-opensans ${open_sans.variable} ${pt_serif.variable}`}>{children}</body>
-        </html>
+        <>
+        {children}
+        </>
     );
 }

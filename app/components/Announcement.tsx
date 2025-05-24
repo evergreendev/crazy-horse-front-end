@@ -14,8 +14,6 @@ const Announcement = async ({data}: { data: Banner }) => {
     const cookieStore = await cookies();
     const hideBanner = cookieStore.get('hide-banner')?.value
 
-    console.log(hideBanner)
-
 
     if (
         hideBanner === data.updatedAt ||
