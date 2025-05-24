@@ -23,9 +23,7 @@ import MegaMenu from "@/app/components/MegaMenu";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
-import Announcement from "@/app/components/Announcement";
 import {open_sans, pt_serif} from "@/app/fonts";
-import ModalComponent from "@/app/components/Modal";
 
 const MobileOnlyInfo = ({meta}: { meta: Meta }) => {
     const currentSchedule = getCurrentSchedule(meta.hours)
