@@ -1,7 +1,7 @@
 "use client"
 import qs from "qs";
 import {useEffect, useState} from "react";
-import {MuseumCollection, Page} from "@/app/types/payloadTypes";
+import {MuseumCollection, Page, PressRelease} from "@/app/types/payloadTypes";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
@@ -49,10 +49,12 @@ const CollectionList = ({block}: {
             | 'studentSpotlight'
             | 'support'
             | 'event'
-            | 'news';
+            | 'news'
+            | 'pressReleases';
         id?: string | null;
         blockName?: string | null;
         blockType: 'collectionList';
+        isMinimal: boolean
     }
 }) => {
     const [collectionItems, setCollectionItems] = useState<any>(null);
@@ -109,23 +111,23 @@ const CollectionList = ({block}: {
     return (
         <div className="max-w-full w-full gap-6 relative flex flex-wrap justify-between mb-14">
             {
-                collectionItems.map((collectionItem: (Page | MuseumCollection)) => {
+                collectionItems.map((collectionItem: (Page | MuseumCollection | PressRelease)) => {
                     const image = getImage(collectionItem);
                     const dateObj = collectionItem.publishedAt ? new Date(collectionItem.publishedAt) : null;
                     return <Link href={getSlugFromCollection(collectionItem, block.collectionsToPull || "")}
-                                 className="w-full bg-gray-100 group sm:w-[30%] relative overflow-hidden flex flex-col"
+                                 className={`w-full group ${block.isMinimal ? "":"sm:w-[30%] bg-gray-100"} relative overflow-hidden flex flex-col`}
                                  key={collectionItem.id}>
                         {
-                            image ? <div className="overflow-hidden"><Image
+                            image && !block.isMinimal ? <div className="overflow-hidden"><Image
                                 style={{objectPosition: `${image.focalX}% ${image.focalY}%`}}
                                 className="aspect-[4/3] group-hover:scale-110 duration-1000 transition-all object-cover object-center"
                                 src={image.url || ""}
                                 alt={image.alt || ""} width={image.width || 0}
                                 height={image.height || 0}/></div> : null
                         }
-                        <div className="py-7 px-3 my-auto">
+                        <div className={`${block.isMinimal ? "p-0" : "p-7"} px-3 my-auto`}>
                             <h2
-                                className="mb-6 text-center text-2xl font-bold underline underline-offset-8 decoration-brand-yellow decoration-4 font-ptserif">{collectionItem.title}</h2>
+                                className={`${block.isMinimal ? "mb-1":"mb-6 font-bold underline underline-offset-8 decoration-brand-yellow decoration-4"} text-center text-2xl font-ptserif`}>{collectionItem.title}</h2>
                             {
                                 dateObj ? <h3 className="italic text-sm text-center mb-6">{monthArr[dateObj.getMonth()]} {dateObj.getDate()}, {dateObj.getFullYear()}</h3> : null
                             }
