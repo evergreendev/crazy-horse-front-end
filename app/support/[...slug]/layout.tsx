@@ -71,11 +71,8 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-        <Script
-            src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
-        <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
-        <body className={`font-opensans ${open_sans.variable} ${pt_serif.variable}`}>{children}</body>
-        </html>
+        <>
+            {children}
+        </>
     );
 }
