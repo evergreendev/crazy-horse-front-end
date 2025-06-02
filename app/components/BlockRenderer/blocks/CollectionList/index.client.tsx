@@ -1,5 +1,5 @@
-"use client"
-import qs from "qs";
+"use client";
+
 import {useEffect, useState} from "react";
 import {MuseumCollection, Page, PressRelease} from "@/app/types/payloadTypes";
 import "slick-carousel/slick/slick.css";
@@ -12,33 +12,12 @@ import {getImage, getSlugFromCollection} from "@/app/components/BlockRenderer/bl
 import Pagination from "@/app/components/Pagination";
 import {useSearchParams} from "next/navigation";
 
-async function getData(query: any, tag: string, collectionSlug: string, page: string, limit: string) {
-    const stringifiedQuery = qs.stringify(
-        {
-            where: query,
-        },
-        {
-            addQueryPrefix: true
-        }
-    );
-
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/${collectionSlug}/?${stringifiedQuery}&depth=2&limit=${limit}&page=${page}&sort=-publishedAt`,
-        {
-            next: {
-                tags: [tag]
-            }
-        }
-    );
-
-    if (res.status !== 200) return null;
-
-    const json = await res.json();
-
-    return {...json, collectionSlug};
-}
-
-const CollectionList = ({block}: {
+const CollectionListClient = ({
+    initialData,
+    block,
+    totalPages: initialTotalPages
+}: {
+    initialData: any[];
     block: {
         perPage?: number | null;
         collectionsToPull:
@@ -55,37 +34,47 @@ const CollectionList = ({block}: {
         blockName?: string | null;
         blockType: 'collectionList';
         isMinimal: boolean
-    }
+    };
+    totalPages: number;
 }) => {
-    const [collectionItems, setCollectionItems] = useState<any>(null);
-    const [totalPages, setTotalPages] = useState(1);
-    const [isLoading, setIsLoading] = useState(true);
+    const [collectionItems, setCollectionItems] = useState<any>(initialData);
+    const [totalPages, setTotalPages] = useState(initialTotalPages);
+    const [isLoading, setIsLoading] = useState(false);
     const searchParams = useSearchParams();
 
-    const currentPage = searchParams.get("page")||"1";
+    const currentPage = searchParams.get("page") || "1";
 
     useEffect(() => {
         async function getAllCollections() {
             if (!block.collectionsToPull) {
-                setIsLoading(false);
                 return null;
             }
 
-            const res = await getData({}, block.collectionsToPull + "_", block.collectionsToPull, currentPage, `${block.perPage || 3}`);
+            setIsLoading(true);
 
-            setTotalPages(res.totalPages);
-
-            setCollectionItems(
-                res.docs
-            )
-            setIsLoading(false);
-
-            /*setCollectionItems(items.slice(0, block.numberOfItemsToShow || 3));*/
+            try {
+                const response = await fetch(
+                    `/api/collections?collectionsToPull=${block.collectionsToPull}&page=${currentPage}&perPage=${block.perPage || 3}`
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch collection data');
+                }
+                
+                const data = await response.json();
+                
+                setTotalPages(data.totalPages);
+                setCollectionItems(data.docs);
+            } catch (error) {
+                console.error('Error fetching collection data:', error);
+            } finally {
+                setIsLoading(false);
+            }
         }
 
         getAllCollections();
-
     }, [block.collectionsToPull, block.perPage, currentPage]);
+
     const skeletonArr: any[] = [];
     const numberOfItemsToShow = block.perPage || 3;
     const monthArr = ["January","February","March","April","May","June","July",
@@ -93,7 +82,6 @@ const CollectionList = ({block}: {
     for (let i = 0; i < numberOfItemsToShow; i++) {
         skeletonArr.push(i);
     }
-
 
     if (isLoading) return <div className="max-w-full w-full gap-6 relative flex flex-wrap justify-between mb-14">
         {
@@ -103,8 +91,7 @@ const CollectionList = ({block}: {
                               containerClassName="w-full h-40 bg-gray-100 group sm:w-[30%] relative overflow-hidden h-96"/>
             })
         }
-    </div>
-        ;
+    </div>;
 
     if (!block.collectionsToPull || !collectionItems) return null;
 
@@ -141,11 +128,11 @@ const CollectionList = ({block}: {
                     </Link>
                 })
             }
-            <div className="w-full">
+            <div className="w-full flex justify-center">
                 <Pagination totalPages={totalPages}/>
             </div>
         </div>
     )
 }
 
-export default CollectionList;
+export default CollectionListClient;

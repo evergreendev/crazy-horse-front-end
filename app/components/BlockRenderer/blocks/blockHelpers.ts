@@ -19,7 +19,7 @@ export function getSlugFromCollection(item: (Page | MuseumCollection | StudentSp
     if (collectionSlug === "media") {
         return `${(item as Media)?.url}`
     }
-    if (collectionSlug === "pressReleases" && (item as PressRelease)?.pdf) {
+    if (collectionSlug === "pressRelease" && (item as PressRelease)?.pdf) {
         return `${((item as PressRelease).pdf as Media)?.url}`
     }
     if(collectionSlug === "eventCat"){
