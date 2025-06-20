@@ -10,7 +10,7 @@ import getUrlFromPageOrExternal from "@/app/utilities/getUrlFromPageOrExternal";
 
 const MaybeLink = ({href, children, className}: { href?: string, children: React.ReactNode, className?: string }) => {
     console.log(href);
-    if (href) {
+    if (href && href !== "#") {
         return <Link className={className} href={href} target="_blank" rel="noreferrer">{children}</Link>
     }
     return <div className={className}>{children}</div>
