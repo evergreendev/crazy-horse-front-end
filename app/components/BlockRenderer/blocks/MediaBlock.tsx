@@ -1,31 +1,40 @@
 "use client"
-import {Media} from "@/app/types/payloadTypes";
+import {Media, Page} from "@/app/types/payloadTypes";
 import Image from "next/image";
 import ReactPlayer from "react-player";
 import PlayButton from "@/public/play-button.svg"
 import NeedsWindow from "@/app/components/NeedsWindow";
 import {sendGAEvent} from "@next/third-parties/google";
+import Link from "next/link";
+import getUrlFromPageOrExternal from "@/app/utilities/getUrlFromPageOrExternal";
+
+const MaybeLink = ({href, children, className}: { href?: string, children: React.ReactNode, className?: string }) => {
+    console.log(href);
+    if (href) {
+        return <Link className={className} href={href} target="_blank" rel="noreferrer">{children}</Link>
+    }
+    return <div className={className}>{children}</div>
+}
 
 const MediaBlock = ({block}: {
-    block: {
-        media?: number | Media | null;
-        thumbnail?: number | Media | null;
-        expandImage?: boolean | null;
-        id?: string | null;
-        url?: string | null;
-        blockName?: string | null;
-        blockType: 'MediaBlock';
-    }
+    block: Extract<NonNullable<Page['layout']>[number], { blockType: 'MediaBlock' }>;
 }) => {
+    const alignmentClass = {
+        left: "mr-auto",
+        right: "ml-auto",
+        center: "mx-auto",
+    }
     if (typeof block.media === "number") return null;
     if (block.media?.mimeType?.includes("image")) {
-        return <Image className={`max-w-full mx-auto ${block.expandImage ? "w-full" : ""}`}
-                      src={block.media?.url || ""} alt={block.media?.alt || ""}
-                      width={block.media?.width || 0}
-                      height={block.media?.height || 0}/>
+        return <MaybeLink href={getUrlFromPageOrExternal(block).url} className={"w-full"}>
+            <Image className={`max-w-full ${alignmentClass[block.align||"center"]} ${block.expandImage ? "w-full" : ""}`}
+                   src={block.media?.url || ""} alt={block.media?.alt || ""}
+                   width={block.media?.width || 0}
+                   height={block.media?.height || 0}/>
+        </MaybeLink>
     }
     if(block.url){
-        return <div className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
+        return <MaybeLink href={getUrlFromPageOrExternal(block).url} className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
             {
                 <NeedsWindow>
                     <ReactPlayer
@@ -45,9 +54,9 @@ const MediaBlock = ({block}: {
                                  url={block.url || ""}/>
                 </NeedsWindow>
             }
-        </div>
+        </MaybeLink>
     }
-    return <div className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
+    return <MaybeLink className={`${block.expandImage ? "md:aspect-auto aspect-square h-full w-full" : "aspect-video"} group  mx-auto`}>
         {
             <NeedsWindow>
                 <ReactPlayer
@@ -66,7 +75,7 @@ const MediaBlock = ({block}: {
                              url={block.media?.url || ""}/>
             </NeedsWindow>
         }
-    </div>
+    </MaybeLink>
 }
 
 export default MediaBlock;
