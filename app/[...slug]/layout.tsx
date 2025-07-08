@@ -6,7 +6,7 @@ import qs from "qs";
 import {Page} from "@/app/types/payloadTypes";
 import {Meta} from "@/app/types/types";
 
-async function getMeta():Promise<Meta["siteOptions"]> {
+async function getMeta(): Promise<Meta["siteOptions"]> {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/globals/site-options?locale=undefined&draft=false&depth=1`,
         {
@@ -52,7 +52,7 @@ export async function generateMetadata({params}: { params: { slug: string[] } })
 
     const meta = await getMeta();
 
-    if (!page){
+    if (!page) {
         return {
             title: meta.siteTitle,
             description: meta.siteDescription
@@ -62,6 +62,9 @@ export async function generateMetadata({params}: { params: { slug: string[] } })
     return {
         title: page.meta?.title || meta.siteTitle + " - " + page.title,
         description: page.meta?.description || page.excerpt || meta.siteDescription,
+        openGraph: {
+            images: typeof page.meta?.image !== "number" && page.meta?.image ? [page.meta?.image.url||""] : []
+        }
     }
 }
 
@@ -72,7 +75,7 @@ export default async function RootLayout({
 }>) {
     return (
         <>
-        {children}
+            {children}
         </>
     );
 }

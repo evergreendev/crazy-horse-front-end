@@ -5,6 +5,8 @@ import Script from "next/script";
 import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 import GoogleAnalyticsPageView from "@/app/components/GoogleAnalyticsPageView";
 import {Suspense} from "react";
+import {Page} from "@/app/types/payloadTypes";
+import qs from "qs";
 
 async function getMeta() {
     const res = await fetch(
@@ -17,16 +19,55 @@ async function getMeta() {
     return await res.json();
 }
 
+async function getPage(query: any, tag: string): Promise<Page> {
+    const stringifiedQuery = qs.stringify(
+        {
+            where: query,
+        },
+        {
+            addQueryPrefix: true
+        }
+    );
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/pages/${stringifiedQuery}&depth=2`,
+        {
+            next: {
+                tags: [tag]
+            }
+        }
+    );
+
+    const json = await res.json();
+
+    return json.docs[0];
+}
+
 
 export async function generateMetadata(): Promise<Metadata> {
+    const page = await getPage({
+        slug: {
+            equals: "home"
+        }
+    }, "pages_");
 
     const meta = await getMeta();
 
+    if (!page) {
+        return {
+            title: meta.siteTitle,
+            description: meta.siteDescription
+        }
+    }
 
     return {
-        title: meta.siteTitle,
-        description: meta.siteDescription,
+        title: page.meta?.title || meta.siteTitle + " - " + page.title,
+        description: page.meta?.description || page.excerpt || meta.siteDescription,
+        openGraph: {
+            images: typeof page.meta?.image !== "number" && page.meta?.image?.url ? [page.meta.image.url] : []
+        }
     }
+
 }
 
 export default async function RootLayout({
