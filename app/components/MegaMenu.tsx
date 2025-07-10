@@ -301,7 +301,7 @@ const MegaMenu = ({nav}: { nav: Navigation }) => {
                 }
             </div>
         </div>
-        <button className="p-2 h-15 flex items-center text-black transition-colors hover:bg-gray-100"
+        <button className="p-2 h-16 flex items-center text-black transition-colors hover:bg-gray-100"
                 onClick={() => {
                     setIsExpanded(!isExpanded)
                     setActiveMenuId(null)
