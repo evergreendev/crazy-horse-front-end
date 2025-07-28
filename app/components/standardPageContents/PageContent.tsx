@@ -10,27 +10,41 @@ import Announcement from "@/app/components/Announcement";
 import {cookies} from "next/headers";
 import PasswordForm from "@/app/components/PasswordForm/PasswordForm";
 import ModalComponent from "@/app/components/Modal";
+import Video from "@/app/components/Video";
 
 const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?: Modal }) => {
     const cookieStore = await cookies();
-    const savedPagePassword = cookieStore.get(data.slug+"password");
+    const savedPagePassword = cookieStore.get(data.slug + "password");
     const showPasswordForm = data.passwordProtect && savedPagePassword?.value !== data.password
 
     return <main className="flex min-h-screen flex-col items-center w-full">
         {
             modal ?
-                <ModalComponent modal={modal} /> : ""
+                <ModalComponent modal={modal}/> : ""
         }
         <Announcement data={meta.banner}/>
         <div className="p-2 xl:px-24 xl:py-7 flex flex-col items-center w-full">
             <TopBar siteOption={meta.siteOptions} nav={meta.nav}/>
         </div>
-        <ImageSlider headerText={data.intro_content?.header || data.title} bodyText={data.intro_content?.content || ""}
-                     images={data.intro_content?.images?.filter((image): image is { media: Media, id: string } => {
-                         return !!image.media && typeof image.media !== "number"
-                     }).map(image => {
-                         return image.media
-                     }) || []}/>
+        {
+            data.intro_content?.videoFile || data.intro_content?.video ?
+                <div className="grow w-full"><Video
+                    thumbnail={typeof data.intro_content?.thumbnail === "number" ? undefined : data.intro_content?.thumbnail}
+                    src={(data.intro_content?.videoFile as Media)?.url || ""}
+                    mobileSrc={(data.intro_content?.mobileVideoFile as Media)?.url || ""}
+                /></div> :
+                <ImageSlider headerText={data.intro_content?.header || data.title}
+                             bodyText={data.intro_content?.content || ""}
+                             images={data.intro_content?.images?.filter((image): image is {
+                                 media: Media,
+                                 id: string
+                             } => {
+                                 return !!image.media && typeof image.media !== "number"
+                             }).map(image => {
+                                 return image.media
+                             }) || []}/>
+        }
+
         <div className="px-7 xl:px-24 py-7 flex-col items-center w-full hidden lg:flex">
             <div className="flex max-w-[calc(1800px-3.5rem)] w-full justify-between">
                 {
@@ -44,7 +58,9 @@ const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?:
         </div>
         <div className="w-full">
             {
-                showPasswordForm ? <PasswordForm cookieKey={data.slug+"password"} password={data.password as string}/> : <BlockRenderer blocks={data.layout}/>
+                showPasswordForm ?
+                    <PasswordForm cookieKey={data.slug + "password"} password={data.password as string}/> :
+                    <BlockRenderer blocks={data.layout}/>
             }
 
         </div>
