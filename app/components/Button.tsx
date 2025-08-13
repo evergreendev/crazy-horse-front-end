@@ -21,7 +21,7 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
     return <>{
                  isExternal
                      ? <LeavingSiteLink tabIndex={tabIndex} href={href}
-                                        className={`${isDonate ?"" : "xl:w-96"} ${isInline ? "inline-flex" : "flex"} w-full md:w-48 justify-center items-center gap-4 px-6 group py-2 text-xl grow ${config}`}>
+                                        className={`${isDonate ?"" : "xl:w-96 flex-row-reverse"} ${isInline ? "inline-flex" : "flex"} w-full md:w-48 justify-center items-center gap-4 px-6 group py-2 text-xl grow ${config}`}>
                          {
                              icon &&
                              <div className="relative">
@@ -51,7 +51,7 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
                      </LeavingSiteLink>
                      :
                      <Link tabIndex={tabIndex} href={href}
-                           className={`${isDonate ?"" : "xl:w-96"} ${isInline ? "inline-flex" : "flex"} w-full md:w-48 justify-center items-center gap-4 px-6 py-2 text-xl group grow ${config}`}>
+                           className={`${isDonate ? "" : "xl:w-96 flex-row-reverse"} ${isInline ? "inline-flex" : "flex"}  w-full md:w-48 justify-center items-center gap-4 px-6 py-2 text-xl group grow ${config}`}>
                          {
                              icon &&
                              <div className="relative">
