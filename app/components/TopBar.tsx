@@ -6,6 +6,7 @@ import React from "react";
 import {Media, Navigation, SiteOption} from "@/app/types/payloadTypes";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
+import {faHeart} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
 
 const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) => {
 
@@ -35,7 +36,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
 
             <div className="ml-auto">
                 <Button config={buttonConfig.highlight + " mb-5 self-start ml-auto w-48  text-center justify-around"}
-                        text="DONATE" href="https://donate.crazyhorsememorial.org/"/>
+                        text="DONATE" href="https://donate.crazyhorsememorial.org/" icon={faHeart}/>
             </div>
             <div className="flex-col ml-auto mb-4 lg:mb-0 lg:ml-0 w-full items-end lg:items-start lg:hidden flex">
                 <MegaMenu nav={nav}/>
@@ -55,7 +56,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
                 </div>
                 <div>
                     <Button text="DONATE" href="https://donate.crazyhorsememorial.org/"
-                            config={buttonConfig.highlight + " text-center justify-around"}/>
+                            config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                 </div>
             </div>
             <div className="w-full flex justify-end">

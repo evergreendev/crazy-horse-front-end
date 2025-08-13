@@ -6,7 +6,7 @@ import {Media, Modal, Page} from "@/app/types/payloadTypes";
 import Footer from "@/app/components/Footer";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import ImageSlider from "@/app/components/ImageSlider";
-import Announcement from "@/app/components/Announcement";
+import Announcement from "@/app/components/Announcement/Announcement";
 import {cookies} from "next/headers";
 import PasswordForm from "@/app/components/PasswordForm/PasswordForm";
 import ModalComponent from "@/app/components/Modal";

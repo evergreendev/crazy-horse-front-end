@@ -25,6 +25,7 @@ import {
     faSquareXTwitter,
     faYoutubeSquare
 } from "@awesome.me/kit-2a2dc088e2/icons/classic/brands";
+import {faHeart} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
 
 const MobileOnlyInfo = ({meta}: { meta: Meta }) => {
     const currentSchedule = getCurrentSchedule(meta.hours)
@@ -160,7 +161,7 @@ export const HomeClient: React.FC<{
                         </div>
                         <div>
                             <Button isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
-                                    config={buttonConfig.highlight + " text-center justify-around"}/>
+                                    config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                         </div>
                     </div>
                     {

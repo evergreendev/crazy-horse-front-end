@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClock, faTicket} from "@awesome.me/kit-2a2dc088e2/icons/classic/regular";
 import Link from "next/link";
 import {faChevronCircleRight} from "@awesome.me/kit-2a2dc088e2/icons/classic/thin";
-import {faLocationDot, faPhoneVolume} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
+import {faHeart, faLocationDot, faPhoneVolume} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
 import Button from "@/app/components/Button";
 import {
     faFacebookSquare,
@@ -23,7 +23,7 @@ import MegaMenu from "@/app/components/MegaMenu";
 import BlockRenderer from "@/app/components/BlockRenderer";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
-import Announcement from "@/app/components/Announcement";
+import Announcement from "@/app/components/Announcement/Announcement";
 import {open_sans, pt_serif} from "@/app/fonts";
 import ModalComponent from "@/app/components/Modal";
 
@@ -157,7 +157,7 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}
                         </div>
                         <div>
                             <Button isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
-                                    config={buttonConfig.highlight + " text-center justify-around"}/>
+                                    config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                         </div>
                     </div>
                     {
@@ -165,8 +165,8 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}
                             <div className="w-full">
                                 <Video
                                     thumbnail={typeof data.intro_content.thumbnail === "number" ? undefined : data.intro_content.thumbnail}
-                                    src={(data.intro_content.videoFile as Media).url || ""}
-                                    mobileSrc={(data.intro_content.mobileVideoFile as Media).url || ""}
+                                    src={(data.intro_content.videoFile as Media)?.url || ""}
+                                    mobileSrc={(data.intro_content.mobileVideoFile as Media)?.url || ""}
                                 />
                                 <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
                             </div> :
