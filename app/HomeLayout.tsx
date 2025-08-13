@@ -156,7 +156,7 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}
 
                         </div>
                         <div>
-                            <Button isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
+                            <Button isDonate isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
                                     config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                         </div>
                     </div>

@@ -35,7 +35,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
             </div>
 
             <div className="ml-auto">
-                <Button config={buttonConfig.highlight + " mb-5 self-start ml-auto w-48  text-center justify-around"}
+                <Button isDonate config={buttonConfig.highlight + " mb-5 self-start ml-auto w-48  text-center justify-around"}
                         text="DONATE" href="https://donate.crazyhorsememorial.org/" icon={faHeart}/>
             </div>
             <div className="flex-col ml-auto mb-4 lg:mb-0 lg:ml-0 w-full items-end lg:items-start lg:hidden flex">
@@ -55,7 +55,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
                     </Link>
                 </div>
                 <div>
-                    <Button text="DONATE" href="https://donate.crazyhorsememorial.org/"
+                    <Button isDonate text="DONATE" href="https://donate.crazyhorsememorial.org/"
                             config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                 </div>
             </div>
