@@ -5,7 +5,6 @@ import { cookies } from "next/headers"
 
 
 const Announcement = async ({data}: { data: Banner }) => {
-    console.log(data);
     const startDate = data.banner_start ? new Date(data.banner_start) : null;
     startDate?.setUTCHours(0, 0, 0, 0);
     const endDate = data.banner_end ? new Date(data.banner_end) : null;
