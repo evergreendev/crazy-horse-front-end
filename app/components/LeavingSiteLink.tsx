@@ -52,9 +52,7 @@ const LeavingSiteLink = ({children, href, rel, className,tabIndex}: {
                 <div className="p-4 my-auto">
                     <p className="text-center mb-4">Thank you for visiting our site.</p>
 
-                    <p className="mb-4">You will be directed to the following website,
-                        which is operated by Korczak’s Heritage, Inc. (a privately-owned business operating at Crazy
-                        Horse), in {timeRemaining} seconds:</p>
+                    <p className="mb-4">You will be directed to the following website, in {timeRemaining} seconds:</p>
                     <p className="text-center text-sm sm:text-base mb-4">{href.split("?")[0]}</p>
                     <a tabIndex={tabIndex} className="block underline mb-4" href={href}>Click here to redirect now</a>
                     <button className="bg-blue-900 text-white p-2" onClick={()=> {
