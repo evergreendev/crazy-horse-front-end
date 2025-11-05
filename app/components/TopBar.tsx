@@ -7,6 +7,7 @@ import {Media, Navigation, SiteOption} from "@/app/types/payloadTypes";
 import SearchBar from "@/app/components/Search";
 import {buttonConfig} from "@/app/components/ButtonConfig";
 import {faHeart} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
+import {faChevronCircleRight} from "@awesome.me/kit-2a2dc088e2/icons/classic/thin";
 
 const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) => {
 
@@ -34,7 +35,13 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
 
             </div>
 
-            <div className="ml-auto">
+            <div className="ml-auto flex gap-3">
+                <Button
+                    text="BUY TICKETS"
+                    href="https://fareharbor.com/embeds/book/crazyhorsememorial/items/354688/?full-items=yes&flow=680245&u=47a370f1-2caf-4219-b33e-3daf581fa1e0&from-ssl=yes&ga=UA-7000283-1%2C1694069336.1703794957%3BUA-156164615-1%2C1694069336.1703794957%3B&ga4t=AW-16566712924%2Cundefined__undefined%3BG-YDSBS7V3D3%2C1694069336.1703794957__1729092627%3B&g4=yes&cp=no&csp=no&back=https%3A%2F%2Fcrazyhorsememorial.org%2Fvisit&language=en-us"
+                    icon={faChevronCircleRight}
+                    config={buttonConfig.primary + "self-start w-48 xl:w-auto text-center justify-around h-full"}
+                />
                 <Button isDonate config={buttonConfig.highlight + " mb-5 self-start ml-auto w-48  text-center justify-around"}
                         text="DONATE" href="https://donate.crazyhorsememorial.org/" icon={faHeart}/>
             </div>
@@ -55,6 +62,12 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
                     </Link>
                 </div>
                 <div>
+                    <Button
+                        text="BUY TICKETS"
+                        href="https://fareharbor.com/embeds/book/crazyhorsememorial/items/354688/?full-items=yes&flow=680245&u=47a370f1-2caf-4219-b33e-3daf581fa1e0&from-ssl=yes&ga=UA-7000283-1%2C1694069336.1703794957%3BUA-156164615-1%2C1694069336.1703794957%3B&ga4t=AW-16566712924%2Cundefined__undefined%3BG-YDSBS7V3D3%2C1694069336.1703794957__1729092627%3B&g4=yes&cp=no&csp=no&back=https%3A%2F%2Fcrazyhorsememorial.org%2Fvisit&language=en-us"
+                        icon={faChevronCircleRight}
+                        config={buttonConfig.primary + "self-start w-48 xl:w-auto text-center justify-around h-full"}
+                    />
                     <Button isDonate text="DONATE" href="https://donate.crazyhorsememorial.org/"
                             config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                 </div>

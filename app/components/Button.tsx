@@ -30,13 +30,13 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
                                          {
                                              isDonate ?
                                                  <>                                                 <FontAwesomeIcon
-                                                     className={`absolute top-0 group-hover:animate-ping size-6 my-auto rounded-full bg-white p-1.5`}
+                                                     className={`absolute top-0 group-hover:animate-ping size-4 my-auto rounded-full bg-white p-2`}
                                                      icon={icon}/>
-                                                     <FontAwesomeIcon className={`size-6 my-auto rounded-full bg-white p-1.5`}
+                                                     <FontAwesomeIcon className={`size-4 p-2 my-auto rounded-full bg-white`}
                                                                       icon={icon}/>
                                                  </>
                                                  : <>
-                                                     <FontAwesomeIcon className="size-6 ml-4 my-auto" icon={icon}/>
+                                                     <FontAwesomeIcon className="size-6 p-1 ml-4 my-auto" icon={icon}/>
                                                  </>
 
                                          }
@@ -60,13 +60,13 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
                                          {
                                              isDonate ?
                                                  <>                                                 <FontAwesomeIcon
-                                                     className={`absolute top-0 group-hover:animate-ping size-6 my-auto rounded-full bg-white p-1.5`}
+                                                     className={`absolute top-0 group-hover:animate-ping size-4 my-auto rounded-full bg-white p-2`}
                                                      icon={icon}/>
-                                                     <FontAwesomeIcon className={`size-6 my-auto rounded-full bg-white p-1.5`}
+                                                     <FontAwesomeIcon className={`size-4 p-2 my-auto rounded-full bg-white`}
                                                                       icon={icon}/>
                                                  </>
                                                  : <>
-                                                     <FontAwesomeIcon className="size-6 ml-4 my-auto" icon={icon}/>
+                                                     <FontAwesomeIcon className="size-6 p-1 ml-4 my-auto" icon={icon}/>
                                                  </>
 
                                          }

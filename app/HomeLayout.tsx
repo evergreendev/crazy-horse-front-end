@@ -128,14 +128,14 @@ const SideBar = ({meta}: { meta: Meta }) => {
     </div>
 }
 
-const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}) => {
+const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal }) => {
     return (
         <main className={`${open_sans.variable} ${pt_serif.variable} flex min-h-screen flex-col justify-between`}>
             {
                 modal ?
-                    <ModalComponent modal={modal} /> : ""
+                    <ModalComponent modal={modal}/> : ""
             }
-                <Announcement data={meta.banner}/>
+            <Announcement data={meta.banner}/>
             <div className="flex flex-wrap xl:flex-nowrap w-full mb-4 max-w-top ml-auto mt-4 pl-0 xl:pl-7">
                 <SideBar meta={meta}/>
                 <div className="font-ptserif mx-auto grow pl-0 xl:pl-10">
@@ -155,9 +155,15 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}
                             </div>
 
                         </div>
-                        <div>
+                        <div className="lg:flex gap-3">
                             <Button isDonate isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
-                                    config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
+                                    config={buttonConfig.highlight + " mb-5 text-center justify-around"} icon={faHeart}/>
+                            <Button
+                                text="BUY TICKETS"
+                                href="https://fareharbor.com/embeds/book/crazyhorsememorial/items/354688/?full-items=yes&flow=680245&u=47a370f1-2caf-4219-b33e-3daf581fa1e0&from-ssl=yes&ga=UA-7000283-1%2C1694069336.1703794957%3BUA-156164615-1%2C1694069336.1703794957%3B&ga4t=AW-16566712924%2Cundefined__undefined%3BG-YDSBS7V3D3%2C1694069336.1703794957__1729092627%3B&g4=yes&cp=no&csp=no&back=https%3A%2F%2Fcrazyhorsememorial.org%2Fvisit&language=en-us"
+                                icon={faChevronCircleRight}
+                                config={buttonConfig.primary + " self-start w-48 xl:w-auto text-center justify-around"}
+                            />
                         </div>
                     </div>
                     {
@@ -168,7 +174,8 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal}
                                     src={(data.intro_content.videoFile as Media)?.url || ""}
                                     mobileSrc={(data.intro_content.mobileVideoFile as Media)?.url || ""}
                                 />
-                                <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial Foundation</p>
+                                <p className="text-sm font-bold text-center italic font-opensans">©Crazy Horse Memorial
+                                    Foundation</p>
                             </div> :
                             ""
                     }
