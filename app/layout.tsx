@@ -86,6 +86,7 @@ t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];fo
 `
             }
         </Script>
+        <Script id={"brandcdn"} type="text/javascript" src="//tag.brandcdn.com/autoscript/crazyhorsememorial_vgtsqk5fmvvsve09/Crazy_Horse_Memorial.js"/>
         <Script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="text/javascript"/>
 {/*        <Script strategy="lazyOnload" id="ttduniveralPixelAPI" type="text/javascript">
             {
