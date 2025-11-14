@@ -125,6 +125,11 @@ const SideBar = ({meta}: { meta: Meta }) => {
             <a href="https://www.youtube.com/@CrazyHorseMemorial"><FontAwesomeIcon className="size-14"
                                                                                    icon={faYoutubeSquare}/></a>
         </div>
+        <Button
+            config={buttonConfig.primary + " mt-5 w-full"}
+            text="Sign up to our newsletter"
+            href="https://crazyhorsememorial.org/newsletter-signup"
+        />
     </div>
 }
 
