@@ -20,7 +20,7 @@ const ImageSlider = ({images, headerText, bodyText}: { images: Media[], headerTe
         slidesToScroll: 1,
         infinite: true,
     }
-    if(images.length === 0){
+    if(images.length === 0 || !images[0].width || !images[0].height){
         return <div
             className="w-full bg-pale-1 xl:bg-transparent p-4 xl:p-0 flex flex-col mx-auto max-w-screen-lg xl:mt-6 text-center">
             <div className="flex xl:justify-center xl:mx-auto">
@@ -34,8 +34,12 @@ const ImageSlider = ({images, headerText, bodyText}: { images: Media[], headerTe
 
     return <div className="sm:max-h-screen max-w-full relative w-full">
         {images.length === 1
-            ? <div className="flex w-full bg-pale-2"><Image priority style={{
-                maxWidth: `${(images[0].width || 0) * 1.1}px`,
+            ? <div className="relative w-full aspect-[16/9] max-h-[80vh]">
+                <Image
+                    fill
+                    priority
+                    sizes="100vw"
+                    style={{
                 objectPosition: `${images[0].focalX}% ${images[0].focalY}%`
             }} className="aspect-square sm:aspect-auto max-h-[80vh] w-full object-cover grow mx-auto" src={images[0].url || ""}
                                                             alt={images[0].alt || ""} width={images[0].width || 0}
