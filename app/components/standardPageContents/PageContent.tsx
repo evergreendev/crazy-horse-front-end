@@ -24,7 +24,7 @@ const PageContent = async ({data, meta, modal}: { data: Page, meta: any, modal?:
         }
         <Announcement data={meta.banner}/>
         <div className="p-2 xl:px-24 xl:py-7 flex flex-col items-center w-full">
-            <TopBar siteOption={meta.siteOptions} nav={meta.nav}/>
+            <TopBar siteOption={meta.siteOptions} nav={meta.nav} donationLinkOverrideUrl={data.donationLinkOverride ? data.donationLinkOverrideUrl : null}/>
         </div>
         {
             data.intro_content?.videoFile || data.intro_content?.video ?
