@@ -316,6 +316,8 @@ export interface Page {
         id?: string | null;
     }[]
         | null;
+    donationLinkOverride?: boolean | null;
+    donationLinkOverrideUrl?: string | null;
     passwordProtect?: boolean | null;
     password?: string | null;
     parent_page?: (number | null) | Page;
@@ -8308,6 +8310,7 @@ export interface Calendar {
         dates?:
             | {
             date?: string | null;
+            endDate?: string | null;
             id?: string | null;
         }[]
             | null;
