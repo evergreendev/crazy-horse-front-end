@@ -558,7 +558,7 @@ function renderText(root: any, key: number, id:string, styleOverride?: string, l
             return <hr key={key + id} className="my-3"/>
         case "link":
             return root.fields.linkType === "internal" ?
-                <Link download={root.fields.download} key={key + id} className={`max-w-[43rem] mx-auto underline text-slate-700 ${linkStyleOverride||""} ${alignment[root.format as keyof {}]}`}
+                <Link download={root.fields.autoDownload} key={key + id} className={`max-w-[43rem] mx-auto underline text-slate-700 ${linkStyleOverride||""} ${alignment[root.format as keyof {}]}`}
                       href={getSlugFromCollection(root.fields.doc.value, root.fields.doc.relationTo)}>{root.children.map((child: any,i:number) => renderText(child, key + i, id, styleOverride,linkStyleOverride))}</Link> :
                 <LeavingSiteLink rel={root.fields.newTab ? "noopener noreferrer" : ""} key={key + id} href={root.fields.url} className={`max-w-[43rem] mx-auto underline text-slate-700 ${linkStyleOverride||""} ${alignment[root.format as keyof {}]}`}>
                     {root.children.map((child: any,i:number) => renderText(child, key + i, id, styleOverride,linkStyleOverride))}
