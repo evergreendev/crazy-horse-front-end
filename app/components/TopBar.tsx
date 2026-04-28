@@ -9,7 +9,9 @@ import {buttonConfig} from "@/app/components/ButtonConfig";
 import {faHeart} from "@awesome.me/kit-2a2dc088e2/icons/classic/solid";
 import {faChevronCircleRight} from "@awesome.me/kit-2a2dc088e2/icons/classic/thin";
 
-const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) => {
+const TopBar = ({siteOption, nav, donationLinkOverrideUrl}: { siteOption: SiteOption, nav: Navigation, donationLinkOverrideUrl?: string | null }) => {
+
+    const donateUrl = donationLinkOverrideUrl || "https://donate.crazyhorsememorial.org/";
 
     return <>
         <div className="hidden lg:flex flex-wrap max-w-screen-2xl w-full justify-end lg:justify-between items-center">
@@ -43,7 +45,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
                     config={buttonConfig.primary + "self-start w-48 xl:w-auto text-center justify-around h-full"}
                 />
                 <Button isDonate config={buttonConfig.highlight + " mb-5 self-start ml-auto w-48  text-center justify-around"}
-                        text="DONATE" href="https://donate.crazyhorsememorial.org/" icon={faHeart}/>
+                        text="DONATE" href={donateUrl} icon={faHeart}/>
             </div>
             <div className="flex-col ml-auto mb-4 lg:mb-0 lg:ml-0 w-full items-end lg:items-start lg:hidden flex">
                 <MegaMenu nav={nav}/>
@@ -68,7 +70,7 @@ const TopBar = ({siteOption, nav}: { siteOption: SiteOption, nav: Navigation }) 
                         icon={faChevronCircleRight}
                         config={buttonConfig.primary + "self-start w-48 xl:w-auto text-center justify-around h-full"}
                     />
-                    <Button isDonate text="DONATE" href="https://donate.crazyhorsememorial.org/"
+                    <Button isDonate text="DONATE" href={donateUrl}
                             config={buttonConfig.highlight + " text-center justify-around"} icon={faHeart}/>
                 </div>
             </div>

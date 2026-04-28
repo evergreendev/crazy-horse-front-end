@@ -1,3 +1,4 @@
+"use server"
 import axios from "axios";
 
 function fileIsAccepted(fileType: string, allowedTypes: "Images" | "Video" | "PDF" | "WordDocs"[]): boolean {
@@ -22,11 +23,70 @@ export async function submitPayloadForm(prevState: {
     fields: any,
     form: null|number
 }, formData: FormData) {
+    const recaptchaToken = formData.get("g-recaptcha-response");
+    if (process.env.RECAPTCHA_SECRET_KEY) {
+        if (!recaptchaToken) {
+            return {
+                message: null,
+                error: {
+                    fieldName: "all",
+                    message: "Please complete the captcha.",
+                },
+                fields: prevState.fields,
+                form: prevState.form,
+            }
+        }
+
+        try {
+            const verifyRes = await axios.post(
+                `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`
+            );
+            if (!verifyRes.data.success) {
+                return {
+                    message: null,
+                    error: {
+                        fieldName: "all",
+                        message: "Captcha verification failed. Please try again.",
+                    },
+                    fields: prevState.fields,
+                    form: prevState.form,
+                }
+            }
+
+            // For v3, we can check the score if we want to be more strict
+            if (process.env.NEXT_PUBLIC_RECAPTCHA_VERSION === 'v3') {
+                const score = verifyRes.data.score;
+                if (score !== undefined && score < 0.5) {
+                    return {
+                        message: null,
+                        error: {
+                            fieldName: "all",
+                            message: "Low trust score. Please try again or contact support.",
+                        },
+                        fields: prevState.fields,
+                        form: prevState.form,
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("ReCAPTCHA verification error:", err);
+            return {
+                message: null,
+                error: {
+                    fieldName: "all",
+                    message: "Error verifying captcha. Please try again later.",
+                },
+                fields: prevState.fields,
+                form: prevState.form,
+            }
+        }
+    }
+
     const formDataArr = Array.from(formData);
     const filesToUpload = [];
     for (let i = 0; i < formDataArr.length; i++) {
         const currField = prevState.fields.find((x: any) => x.name === formDataArr[i][0]);
-        if (currField.blockType === "FileUpload") {
+        if (currField?.blockType === "FileUpload") {
 
             const file: File = formDataArr[i][1] as File;
             const maxFileSize = (currField.maxSize || 25) * 1000000;
@@ -76,12 +136,20 @@ export async function submitPayloadForm(prevState: {
     try {
         const uploadedFileNames: string[] = [];
         for (const file of filesToUpload) {
-            const fileRes = await axios.postForm(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
-                file: file.formData[1],
-                _payload: JSON.stringify({
-                }),
-            }, {headers: {"Content-Type": "multipart/form-data"}});
-            const fileData = await fileRes.data;
+            const uploadFormData = new FormData();
+            uploadFormData.append("file", file.formData[1]);
+            uploadFormData.append("_payload", JSON.stringify({}));
+
+            const fileRes = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_SERVER_URL}/api/userUploadedFormDocuments`, {
+                method: "POST",
+                body: uploadFormData,
+            });
+
+            if (!fileRes.ok) {
+                throw new Error("Failed to upload file");
+            }
+
+            const fileData = await fileRes.json();
             uploadedFileNames.push(fileData.doc.filename);
         }
 

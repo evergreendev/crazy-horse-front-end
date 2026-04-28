@@ -43,13 +43,25 @@ function hasEventToday(calendarItem: Calendar["calendarItems"][0], currDate: Dat
 
     if (!calendarItem || !calendarItem.dates) return false;
 
-    return calendarItem.dates.find((date: any) => {
-        const dateToCheck = new Date(date.date);
-        const year = currDate.getFullYear();
-        const month = currDate.getMonth();
-        const day = currDate.getDate();
+    const checkYear = currDate.getFullYear();
+    const checkMonth = currDate.getMonth();
+    const checkDay = currDate.getDate();
 
-        return year === dateToCheck.getFullYear() && month === dateToCheck.getMonth() && day === dateToCheck.getDate();
+    const checkDate = new Date(checkYear, checkMonth, checkDay).getTime();
+
+    return calendarItem.dates.some((date: any) => {
+        if (!date.date) return false;
+        const startDate = new Date(date.date);
+        const startOnlyDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate()).getTime();
+
+        if (date.endDate) {
+            const endDate = new Date(date.endDate);
+            const endOnlyDate = new Date(endDate.getUTCFullYear(), endDate.getUTCMonth(), endDate.getUTCDate()).getTime();
+
+            return checkDate >= startOnlyDate && checkDate <= endOnlyDate;
+        }
+
+        return checkDate === startOnlyDate;
     });
 }
 

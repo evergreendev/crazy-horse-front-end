@@ -163,7 +163,7 @@ const HomeLayout = ({data, meta, modal}: { data: Page, meta: Meta, modal: Modal 
 
                         </div>
                         <div className="lg:flex gap-3">
-                            <Button isDonate isExternal text="DONATE" href="https://donate.crazyhorsememorial.org/"
+                            <Button isDonate isExternal text="DONATE" href={data.donationLinkOverride ? data.donationLinkOverrideUrl || "https://donate.crazyhorsememorial.org/" : "https://donate.crazyhorsememorial.org/"}
                                     config={buttonConfig.highlight + " mb-5 text-center justify-around"} icon={faHeart}/>
                             <Button
                                 text="BUY TICKETS"

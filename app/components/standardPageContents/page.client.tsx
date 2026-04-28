@@ -19,7 +19,7 @@ const PageClient = ({initialPage, meta}:{initialPage:Page, meta:Meta}) => {
 
     return <main className="flex min-h-screen flex-col items-center w-full">
         <div className="p-2 xl:px-24 xl:py-7 flex flex-col items-center w-full">
-            <TopBar siteOption={meta.siteOptions} nav={meta.nav}/>
+            <TopBar siteOption={meta.siteOptions} nav={meta.nav} donationLinkOverrideUrl={data.donationLinkOverride ? data.donationLinkOverrideUrl : null}/>
         </div>
         <ImageSlider headerText={data.intro_content?.header||data.title} bodyText={data.intro_content?.content||""} images={data.intro_content?.images?.filter((image): image is { media: Media, id: string } => {
             return !!image.media && typeof image.media !== "number"

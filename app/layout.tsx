@@ -4,6 +4,7 @@ import "@/app/globals.css";
 import Script from "next/script";
 import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 import GoogleAnalyticsPageView from "@/app/components/GoogleAnalyticsPageView";
+import ReCaptchaProviderWrapper from "@/app/components/ReCaptchaProvider";
 import {Suspense} from "react";
 import {Page} from "@/app/types/payloadTypes";
 import qs from "qs";
@@ -112,7 +113,12 @@ universalPixelApi.init("j59v8fs", ["3ywytgo"], "https://insight.adsrvr.org/track
             src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
         <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
         <body className={`${open_sans.variable} ${pt_serif.variable}`}>
-            {children}
+            <ReCaptchaProviderWrapper
+                siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                version={process.env.NEXT_PUBLIC_RECAPTCHA_VERSION}
+            >
+                {children}
+            </ReCaptchaProviderWrapper>
             {/* GoogleAnalyticsPageView component for tracking page views on route changes */}
             <Suspense>
                 <div id="analytics-wrapper">

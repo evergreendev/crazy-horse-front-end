@@ -2,7 +2,7 @@
 import {Form} from "@/app/types/payloadTypes";
 import {useFormState, useFormStatus} from "react-dom";
 import {submitPayloadForm} from "./actions";
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import FieldError from "@/app/components/BlockRenderer/blocks/FormBlock/FieldError";
 import {Country} from "@/app/components/BlockRenderer/blocks/FormBlock/Country";
 import {Email} from "@/app/components/BlockRenderer/blocks/FormBlock/Email";
@@ -14,6 +14,8 @@ import {Text} from "@/app/components/BlockRenderer/blocks/FormBlock/Text";
 import {TextArea} from "@/app/components/BlockRenderer/blocks/FormBlock/TextArea";
 import {useRouter} from "next/navigation";
 import {Upload} from "@/app/components/BlockRenderer/blocks/FormBlock/Upload";
+import ReCAPTCHA from "react-google-recaptcha";
+import {useGoogleReCaptcha} from "react-google-recaptcha-v3";
 
 const SubmitButton = ({submitText}: { submitText:string }) => {
     const {pending} = useFormStatus();
@@ -76,11 +78,34 @@ const FormBlock = ({block}: {
 
     const [state, formAction] = useFormState(submitPayloadForm, initialState);
     const router = useRouter();
+    const recaptchaRef = useRef<ReCAPTCHA>(null);
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
     if (typeof block.form === "number" || !block.form) return null;
 
     if (state.message && block.form.confirmationType === "redirect" && block.form.redirect){
         router.push(block.form.redirect.url);
+    }
+
+    const handleSubmit = async (formData: FormData) => {
+        if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+            console.log("recaptchaToken", recaptchaToken);
+            if (process.env.NEXT_PUBLIC_RECAPTCHA_VERSION === 'v3') {
+                if (executeRecaptcha) {
+                    const token = await executeRecaptcha('form_submit');
+                    formData.set("g-recaptcha-response", token);
+                }
+            } else if (process.env.NEXT_PUBLIC_RECAPTCHA_SIZE === 'invisible') {
+                if (!recaptchaToken) {
+                    const token = await recaptchaRef.current?.executeAsync();
+                    if (token) {
+                        formData.set("g-recaptcha-response", token);
+                    }
+                }
+            }
+        }
+        formAction(formData);
     }
 
     return <div className="max-w-screen-lg w-full mx-auto bg-gray-100">
@@ -89,7 +114,7 @@ const FormBlock = ({block}: {
             <div className="p-16 min-h-96 flex justify-center flex-col">{renderText(block.form.confirmationMessage?.root,0,block.id+"message"||"0")}</div>
         }
         <form className={`flex flex-wrap w-full ${state.message ? "hidden" : ""}`}
-              action={formAction}>
+              action={handleSubmit}>
             {
                 block.form.fields?.map(field => {
                     switch (field.blockType) {
@@ -121,6 +146,20 @@ const FormBlock = ({block}: {
                     <div className="w-full mx-6 p-2 bg-red-100 border border-red-500 text-red-950 font-bold">{state.error.message}</div> : ""
             }
             <div className="w-full">
+                {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+                    <div className="mx-6 mb-4">
+                        {process.env.NEXT_PUBLIC_RECAPTCHA_VERSION !== 'v3' && (
+                            <ReCAPTCHA
+                                ref={recaptchaRef}
+                                size={(process.env.NEXT_PUBLIC_RECAPTCHA_SIZE as any) || "normal"}
+                                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                onChange={(token) => {
+                                    setRecaptchaToken(token);
+                                }}
+                            />
+                        )}
+                    </div>
+                )}
                 <SubmitButton submitText={block.form.submitButtonLabel||"Submit"}/>
             </div>
         </form>
