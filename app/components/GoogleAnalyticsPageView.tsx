@@ -9,6 +9,17 @@ export default function GoogleAnalyticsPageView() {
 
   useEffect(() => {
     if (pathname) {
+      if (navigator.globalPrivacyControl === true) {
+        return;
+      }
+
+      const consentManager = window.silktideConsentManager?.getInstance?.();
+      const analyticsConsent = consentManager?.getConsentChoice?.('analytics');
+
+      if (analyticsConsent !== true) {
+        return;
+      }
+
       // Construct the full URL including search parameters
       const url = searchParams.size > 0 
         ? `${pathname}?${searchParams.toString()}`

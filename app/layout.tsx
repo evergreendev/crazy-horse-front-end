@@ -2,12 +2,12 @@ import type {Metadata} from "next";
 import {open_sans, pt_serif} from "@/app/fonts";
 import "@/app/globals.css";
 import Script from "next/script";
-import {GoogleAnalytics, GoogleTagManager} from '@next/third-parties/google'
 import GoogleAnalyticsPageView from "@/app/components/GoogleAnalyticsPageView";
 import ReCaptchaProviderWrapper from "@/app/components/ReCaptchaProvider";
 import {Suspense} from "react";
 import {Page} from "@/app/types/payloadTypes";
 import qs from "qs";
+import ConsentManagerScripts from "@/app/components/ConsentManagerScripts";
 
 async function getMeta() {
     const res = await fetch(
@@ -79,39 +79,21 @@ export default async function RootLayout({
     const meta = await getMeta();
     return (
         <html lang="en">
-        <Script id={"fundRaiseUp"}>
-            {
-                `(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'.split(','),i=0;o=function(n){return function(){return i?o.l.push([n,arguments]):o._.push([n,arguments])}},i=0;o._=[];for(;i<l.length;i++)o[l[i]]=o(l[i]);w[n]=o;
+        <head>
+            <Script id={"fundRaiseUp"}>
+                {
+                    `(function(w,d,s,n,a){if(!w[n]){var l='call,catch,on,once,set,then,track,openCheckout'.split(','),i=0;o=function(n){return function(){return i?o.l.push([n,arguments]):o._.push([n,arguments])}},i=0;o._=[];for(;i<l.length;i++)o[l[i]]=o(l[i]);w[n]=o;
 t=d.getElementsByTagName(s)[0];j=d.createElement(s);j.async=1;j.src='https://cdn.fundraiseup.com/widget/'+a+'.js';
 t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];for(i=0;i<8;i++)o.t[i]=0;l[1]=o;l[2]=[]}})(window,document,'script','FundraiseUp','AMHYAEEN');
 `
-            }
-        </Script>
-        <Script id={"brandcdn"} type="text/javascript" src="//tag.brandcdn.com/autoscript/crazyhorsememorial_vgtsqk5fmvvsve09/Crazy_Horse_Memorial.js"/>
-        <Script src="https://js.adsrvr.org/up_loader.1.1.0.js" type="text/javascript"/>
-{/*        <Script strategy="lazyOnload" id="ttduniveralPixelAPI" type="text/javascript">
-            {
-                `                ttd_dom_ready( function () {if (typeof TTDUniversalPixelApi === 'function') {var universalPixelApi = new TTDUniversalPixelApi(); universalPixelApi.init("yh6tlla", ["7un71c4"], "https://insight.adsrvr.org/track/up");}})
-`}
-        </Script>*/}
-        <Script strategy="lazyOnload" id="ttduniveralPixelAPI" type="text/javascript">
-            {
-                `           ttd_dom_ready( function() {
-
-if (typeof TTDUniversalPixelApi === 'function') {
-
-var universalPixelApi = new TTDUniversalPixelApi();
-
-universalPixelApi.init("j59v8fs", ["3ywytgo"], "https://insight.adsrvr.org/track/up");
-
-}
-
-});
-`}
-        </Script>
-        <Script
-            src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
-        <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
+                }
+            </Script>
+            <Script id={"brandcdn"} type="text/javascript" src="//tag.brandcdn.com/autoscript/crazyhorsememorial_vgtsqk5fmvvsve09/Crazy_Horse_Memorial.js"/>
+            <Script
+                src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
+            <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
+            <ConsentManagerScripts />
+        </head>
         <body className={`${open_sans.variable} ${pt_serif.variable}`}>
             <ReCaptchaProviderWrapper
                 siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
@@ -126,8 +108,6 @@ universalPixelApi.init("j59v8fs", ["3ywytgo"], "https://insight.adsrvr.org/track
                 </div>
             </Suspense>
         </body>
-        <GoogleAnalytics gaId="G-YDSBS7V3D3"/>
-        <GoogleTagManager gtmId="GTM-58SJF86R"/>
         </html>
     );
 }
