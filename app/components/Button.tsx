@@ -4,6 +4,26 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
 import Link from "next/link";
 import {buttonConfig, Config} from "@/app/components/ButtonConfig";
 import LeavingSiteLink from "@/app/components/LeavingSiteLink";
+import {useEffect, useState} from "react";
+
+const DONATE_URL_PREFIX = "https://donate.crazyhorsememorial.org";
+
+function mergeCurrentUrlParamsIntoDonateUrl(href: string) {
+    if (typeof window === "undefined" || !href.startsWith(DONATE_URL_PREFIX)) return href;
+
+    const currentParams = new URLSearchParams(window.location.search);
+    if (!Array.from(currentParams.keys()).length) return href;
+
+    try {
+        const donateUrl = new URL(href);
+        currentParams.forEach((value, key) => {
+            donateUrl.searchParams.set(key, value);
+        });
+        return donateUrl.toString();
+    } catch {
+        return href;
+    }
+}
 
 const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDonate}: {
     text: string,
@@ -18,9 +38,15 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
 
     if (!config) config = buttonConfig.primary;
 
+    const [resolvedHref, setResolvedHref] = useState(href);
+
+    useEffect(() => {
+        setResolvedHref(mergeCurrentUrlParamsIntoDonateUrl(href));
+    }, [href]);
+
     return <>{
                  isExternal
-                     ? <LeavingSiteLink tabIndex={tabIndex} href={href}
+                     ? <LeavingSiteLink tabIndex={tabIndex} href={resolvedHref}
                                         className={`${isDonate ? "" : "xl:w-96 flex-row-reverse justify-between"} ${isInline ? "inline-flex" : "flex"} w-full md:w-48 justify-center items-center gap-4 px-6 group py-2 text-xl grow ${config}`}>
                          {
                              icon &&
@@ -50,7 +76,7 @@ const Button = ({text, href, icon, config, tabIndex, isExternal, isInline, isDon
                              className={`font-opensans`}>{text}</span>
                      </LeavingSiteLink>
                      :
-                     <Link tabIndex={tabIndex} href={href}
+                     <Link tabIndex={tabIndex} href={resolvedHref}
                            className={`${isDonate ? "" : "xl:w-96 flex-row-reverse justify-between"} ${isInline ? "inline-flex" : "flex"}  w-full md:w-48 justify-center items-center gap-4 px-6 py-2 text-xl group grow ${config}`}>
                          {
                              icon &&
