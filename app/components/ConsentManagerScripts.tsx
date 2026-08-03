@@ -99,6 +99,7 @@ window.gtag('consent', 'default', {
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
+    loadScriptOnce('google-tag-manager', 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(gtmId));
     loadScriptOnce('google-analytics-gtag', 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaMeasurementId), function() {
       window.gtag('js', new Date());
       window.gtag('config', gaMeasurementId, { send_page_view: false });
