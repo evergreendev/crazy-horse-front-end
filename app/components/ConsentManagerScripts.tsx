@@ -5,7 +5,11 @@ const GTM_ID = "GTM-58SJF86R";
 const ADSRVR_ADVERTISER_ID = "j59v8fs";
 const ADSRVR_PIXEL_IDS = ["3ywytgo"];
 
-export default function ConsentManagerScripts() {
+type ConsentManagerScriptsProps = {
+  isUSVisitor: boolean;
+};
+
+export default function ConsentManagerScripts({ isUSVisitor }: ConsentManagerScriptsProps) {
   return (
     <>
       <Script id="google-consent-default" strategy="beforeInteractive">
@@ -36,19 +40,33 @@ window.gtag('consent', 'default', {
   var gtmId = '${GTM_ID}';
   var adsrvrAdvertiserId = '${ADSRVR_ADVERTISER_ID}';
   var adsrvrPixelIds = ${JSON.stringify(ADSRVR_PIXEL_IDS)};
+  var isUSVisitor = ${JSON.stringify(isUSVisitor)};
   var gpcEnabled = navigator.globalPrivacyControl === true;
+
+  // Measurement discontinuity: GA4 traffic will increase as U.S. analytics changes from opt-in to opt-out.
+  function applyInitialConsentChoice() {
+    try {
+      if (gpcEnabled) {
+        window.localStorage.setItem('stcm.crazy-horse.hasConsented', 'true');
+        window.localStorage.setItem('stcm.crazy-horse.consent.essential', 'true');
+        window.localStorage.setItem('stcm.crazy-horse.consent.analytics', 'false');
+        window.localStorage.setItem('stcm.crazy-horse.consent.marketing', 'false');
+        return;
+      }
+
+      if (isUSVisitor && window.localStorage.getItem('stcm.crazy-horse.hasConsented') === null) {
+        window.localStorage.setItem('stcm.crazy-horse.hasConsented', 'true');
+        window.localStorage.setItem('stcm.crazy-horse.consent.essential', 'true');
+        window.localStorage.setItem('stcm.crazy-horse.consent.analytics', 'true');
+        window.localStorage.setItem('stcm.crazy-horse.consent.marketing', 'false');
+      }
+    } catch (error) {
+      console.warn('Unable to persist the initial consent choice.', error);
+    }
+  }
 
   function honorGlobalPrivacyControl() {
     if (!gpcEnabled) return;
-
-    try {
-      window.localStorage.setItem('stcm.crazy-horse.hasConsented', 'true');
-      window.localStorage.setItem('stcm.crazy-horse.consent.essential', 'true');
-      window.localStorage.setItem('stcm.crazy-horse.consent.analytics', 'false');
-      window.localStorage.setItem('stcm.crazy-horse.consent.marketing', 'false');
-    } catch (error) {
-      console.warn('Unable to persist Global Privacy Control consent choices.', error);
-    }
 
     window.gtag('consent', 'update', {
       analytics_storage: 'denied',
@@ -58,6 +76,7 @@ window.gtag('consent', 'default', {
     });
   }
 
+  applyInitialConsentChoice();
   honorGlobalPrivacyControl();
 
   function loadScriptOnce(id, src, onload) {
@@ -74,13 +93,12 @@ window.gtag('consent', 'default', {
     document.head.appendChild(script);
   }
 
-  function loadGoogleTracking() {
+  function loadGoogleAnalytics() {
     if (gpcEnabled) return;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
-    loadScriptOnce('google-tag-manager', 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(gtmId));
     loadScriptOnce('google-analytics-gtag', 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(gaMeasurementId), function() {
       window.gtag('js', new Date());
       window.gtag('config', gaMeasurementId, { send_page_view: false });
@@ -92,8 +110,11 @@ window.gtag('consent', 'default', {
     });
   }
 
-  function loadAdsRvrTracking() {
+  function loadMarketingTracking() {
     if (gpcEnabled) return;
+
+    // The current GTM container contains a custom Simpli.fi advertising tag, so load it only with marketing consent.
+    loadScriptOnce('google-tag-manager', 'https://www.googletagmanager.com/gtm.js?id=' + encodeURIComponent(gtmId));
 
     loadScriptOnce('adsrvr-up-loader', 'https://js.adsrvr.org/up_loader.1.1.0.js', function() {
       if (typeof window.ttd_dom_ready !== 'function') return;
@@ -148,18 +169,18 @@ window.gtag('consent', 'default', {
       {
         id: 'analytics',
         label: 'Analytics',
-        description: gpcEnabled ? 'Global Privacy Control is enabled in your browser, so analytics tracking is disabled.' : 'Google Analytics and Google Tag Manager help us understand how visitors use the website.',
+        description: gpcEnabled ? 'Global Privacy Control is enabled in your browser, so analytics tracking is disabled.' : 'Google Analytics helps us understand how visitors use the website.',
         defaultValue: false,
         gtag: 'analytics_storage',
-        onAccept: loadGoogleTracking
+        onAccept: loadGoogleAnalytics
       },
       {
         id: 'marketing',
         label: 'Marketing',
-        description: gpcEnabled ? 'Global Privacy Control is enabled in your browser, so marketing tracking and data sharing are disabled.' : 'The Trade Desk AdsRvr pixel supports advertising measurement and audience-related marketing.',
+        description: gpcEnabled ? 'Global Privacy Control is enabled in your browser, so marketing tracking and data sharing are disabled.' : 'Google Tag Manager advertising tags and the Trade Desk AdsRvr pixel support advertising measurement and audience-related marketing.',
         defaultValue: false,
         gtag: ['ad_storage', 'ad_user_data', 'ad_personalization'],
-        onAccept: loadAdsRvrTracking
+        onAccept: loadMarketingTracking
       }
     ]
   });

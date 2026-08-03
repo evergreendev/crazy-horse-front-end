@@ -8,6 +8,7 @@ import {Suspense} from "react";
 import {Page} from "@/app/types/payloadTypes";
 import qs from "qs";
 import ConsentManagerScripts from "@/app/components/ConsentManagerScripts";
+import {headers} from "next/headers";
 
 async function getMeta() {
     const res = await fetch(
@@ -77,6 +78,13 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const meta = await getMeta();
+    const requestHeaders = await headers();
+
+    const country =
+        requestHeaders.get("x-vercel-ip-country") ??
+        requestHeaders.get("cf-ipcountry") ??
+        "";
+
     return (
         <html lang="en">
         <head>
@@ -92,7 +100,7 @@ t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];fo
             <Script
                 src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
             <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
-            <ConsentManagerScripts />
+            <ConsentManagerScripts isUSVisitor={country === "US"} />
         </head>
         <body className={`${open_sans.variable} ${pt_serif.variable}`}>
             <ReCaptchaProviderWrapper
