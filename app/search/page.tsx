@@ -96,6 +96,8 @@ export default async function SearchPage({searchParams}: {
             <h1 className="max-w-screen-md mb-6 mx-auto text-4xl font-ptserif underline underline-offset-8 decoration-brand-yellow decoration-4">Results</h1>
             <div className="max-w-screen-sm mx-auto flex-col">
                 {data.docs && data.docs.map((doc: Search) => {
+                    if (!doc?.doc?.relationTo || doc.doc.value == null) return null;
+
                     return <Link className="w-full text-xl bg-slate-100 hover:bg-slate-200 p-2 my-2 flex flex-wrap"
                                  key={doc.id} href={`/id-redirect-to-slug/${doc.doc.relationTo}/${doc.doc.value}`}>
                         <FontAwesomeIcon className="text-slate-900 mr-2" size="lg" icon={faFile}/>
