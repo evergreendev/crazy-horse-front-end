@@ -98,7 +98,7 @@ t.parentNode.insertBefore(j,t);o.l=[];o._=[];o.v=5;o.h=w.location.href;o.t=[];fo
             </Script>
             <Script id={"brandcdn"} type="text/javascript" src="//tag.brandcdn.com/autoscript/crazyhorsememorial_vgtsqk5fmvvsve09/Crazy_Horse_Memorial.js"/>
             <Script
-                src="//https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
+                src="https://linkprotect.cudasvc.com/url?a=https%3a%2f%2f%2f%2ftag.brandcdn.com%2fautoscript%2fcrazyhorsememorial_vgtsqk5fmvvsve09%2fCrazy_Horse_Memorial.js&c=E,1,-HJw6C0kycDXGRiVnsdST6VP3vcPRWtgjwIUtPnXdd_37gl5XrGUyEuIsC0nt3o6YkjXuXZQ6XtHNdMpX6ul8EIUeAh3G4RAJx1QebC9fsRu4wM,&typo=1"/>
             <Script src="https://fareharbor.com/embeds/api/v1/?autolightframe=yes"/>
             <ConsentManagerScripts isUSVisitor={country === "US"} />
         </head>
