@@ -83,7 +83,7 @@ const TextBlock = ({block}: {
                             {
                                 block.heading_link?.Relation?.value ? <Link
                                     className="font-ptserif underline"
-                                    href={"/" + (block.heading_link?.Relation?.value as Page)?.full_path}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</Link> : ""
+                                    href={getSlugFromCollection((block.heading_link as any)?.Relation?.value || "", (block.heading_link as any)?.Relation?.relationTo || "pages")}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</Link> : ""
                             }
 
                         </div>
