@@ -70,14 +70,22 @@ const TextBlock = ({block}: {
                 block.heading_link
                     ? block?.heading_link?.external
                         ? <div
-                            className="text-xl text-center font-ptserif italic">{block.heading_link?.label ? block.heading_link?.title + " " : ""}<a
-                            className="font-ptserif underline"
-                            href={block.heading_link?.external_url || ""}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</a>
+                            className="text-xl text-center font-ptserif italic">{block.heading_link?.label ? block.heading_link?.title + " " : ""}
+                            {
+                                block.heading_link?.external_url ? <a
+                                        className="font-ptserif underline"
+                                        href={block.heading_link?.external_url || ""}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</a>
+                                    : ""
+                            }
                         </div>
                         : <div
-                            className="text-xl text-center font-ptserif italic">{block.heading_link?.label ? block.heading_link?.title + " " : ""}<Link
-                            className="font-ptserif underline"
-                            href={"/" + (block.heading_link?.Relation?.value as Page)?.full_path}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</Link>
+                            className="text-xl text-center font-ptserif italic">{block.heading_link?.label ? block.heading_link?.title + " " : ""}
+                            {
+                                block.heading_link?.Relation?.value ? <Link
+                                    className="font-ptserif underline"
+                                    href={"/" + (block.heading_link?.Relation?.value as Page)?.full_path}>{block.heading_link?.label ? block.heading_link?.label : block.heading_link?.title}</Link> : ""
+                            }
+
                         </div>
                     : ""
             }
@@ -95,7 +103,7 @@ const TextBlock = ({block}: {
                     : <div
                         className="text-lg font-semibold text-center font-opensans italic">{item.label ? item.title + " " : ""}<Link
                         className="font-opensans underline"
-                        href={getSlugFromCollection((item as any)?.Relation?.value||"", (item as any)?.Relation?.relationTo||"pages")}>{item.label ? item.label : item.title}</Link>
+                        href={getSlugFromCollection((item as any)?.Relation?.value || "", (item as any)?.Relation?.relationTo || "pages")}>{item.label ? item.label : item.title}</Link>
                     </div>
             })
         }
